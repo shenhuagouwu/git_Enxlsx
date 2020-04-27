@@ -1,0 +1,18 @@
+本地库还未进行版本控制时：
+git init
+git add .
+git commit -m "first commit"
+git remote add origin git@github.com:yourName/yourGit.git
+//将本地库的所有内容推送到远程库上
+git push -u origin master
+
+
+本地库已进行版本控制，并已经做了添加及提交操作：
+
+git remote add origin git@github.com:yourName/yourGit.git
+//将本地库的所有内容推送到远程库上
+git push -u origin master 
+
+
+ssh-keygen -p [-P old_passphrase] [-N new_passphrase] [-f keyfile]
+ssh-keygen -p -P old_passphrase -N '' -f ~/.ssh/id_rsa
