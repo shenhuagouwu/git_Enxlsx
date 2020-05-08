@@ -9,14 +9,36 @@
     </div>
     <div class="adminmainbom">
         <div class="adminmainfl">
-            <admin-left v-bind:outData="outData"></admin-left>
+            <!-- <admin-left v-bind:outData="outData"></admin-left> -->
+          <div class="nav-box">
+            <ul class="nav">
+              <li v-for="(item, index) in nav" :class="{ active : actives === index }" :key="index" @click="contact(index, item.path), actives = index">
+                {{item.title}}
+              </li>
+            </ul>
+          </div>
+          <div class="choice-box" v-bind:class="isOpen?'is-open':''">
+              <draggable
+                tag="ul"
+                class="list-ul"
+                v-bind:list="lists"
+                :options="{sort: false, group: {name: 'people', pull:'clone',put: false}}"
+              >
+                <li class="list-li" v-for="element in lists" :key="element.id">{{ element.name }}</li>
+              </draggable>
+              <div class="choice-show" @click="choicetoggle">
+                <span></span>
+              </div>
+          </div>
         </div>
         <div class="adminmainfr">
+           <router-view></router-view>
         </div>
     </div>
   </div>
 </template>
 <script>
+import draggable from "vuedraggable";
 import XLSX from 'xlsx'
 import moment from 'moment'
 import adminLeft from '../public/adminLeft'
@@ -24,13 +46,63 @@ export default {
   name: 'indexPage',
   components:{
     adminLeft,
+    draggable
   },
+  order: 2,
   data:function(){
     return {
-      outData:[]
+      actives: 0,
+      currentChildren:[],
+      nav: [
+        { 
+          title: '产品分类', 
+          path: '/Product' ,
+          isOn:true
+        },
+        { title: '新闻分类', path: '/News',isOn:false },
+        { title: '问答分类', path: '/Wenda',isOn:false },
+        { title: '视频分类', path: '/Video',isOn:false }
+      ],
+      lists: [
+        {
+          id: 1,
+          name: "1月询盘",
+          text: "100"
+        },
+        {
+          id: 2,
+          name: "2月询盘",
+          text: "200"
+        },
+        {
+          id: 3,
+          name: "3月询盘",
+          text: "300"
+        },
+        {
+          id: 4,
+          name: "4月询盘",
+          text: "400"
+        },
+        {
+          id: 5,
+          name: "5月询盘",
+          text: "500"
+        }
+      ],
+      outData:[],
+      isOpen: false
     }
   },
   methods:{
+    contact(index, path){
+      this.actives = index;
+      this.$router.push(path)
+    },
+    choicetoggle: function() {
+      var $this = this;
+      $this.isOpen = !$this.isOpen;
+    },
     handleClick() {
       document.querySelector('.input-file').click()
     },
@@ -174,9 +246,110 @@ export default {
       position:absolute;;
       left:0px;
       width:240px;
-      //background:#21262e;
+      background-color: #5ea6fb;
+      background-image: -webkit-gradient(linear, left top, left bottom, color-stop(20%, #5ea6fb), to(#3ee2db));
+      background-image: linear-gradient(#5ea6fb 20%, #3ee2db);
       height:100%;
       top:0px;
+      .nav-box{
+        .nav{
+          li{
+            width: 100%;
+            font-size: 15px;
+            color: #fff;
+            line-height: 50px;
+            padding: 0 20px;
+            cursor: pointer;
+            position: relative;
+            &.active{
+              background-color: #2a82f1;
+              background-image: linear-gradient(to right, #2a82f1, #3881f0);
+              box-shadow: 0 5px 5px #276ae7 inset;
+            }
+            &::before{
+              content: "";
+              width: 50px;
+              background: url(../../assets/images/icon-tb01.png) center no-repeat;
+              background-size: 15px;
+              position: absolute;
+              right: 0;
+              top: 0;
+              bottom: 0;
+            }
+          }
+        }
+      }
+      .choice-box {
+      width: 0;
+      height: 100%;
+      background-color: #5ea6fb;
+      background-image: linear-gradient(#5ea6fb 20%, #3ee2db);
+      position: absolute;
+      left: 240px;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      word-break: keep-all;
+      transition: all 0.3s linear;
+      }
+      .choice-box.is-open {
+      width: 150px;
+      border-left: 1px solid rgba(255, 255, 255, 0.5);
+      }
+      .choice-box .list-ul {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      }
+      .choice-box .list-ul li {
+      font-size: 15px;
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+      cursor: move;
+      }
+      .choice-show {
+      width: 48px;
+      height: 48px;
+      background-color: #5ea6fb;
+      background-image: linear-gradient(to right, #5fa6fb, #3ee2db);
+      right: -48px;
+      position: absolute;
+      right: -48px;
+      top: 97px;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      }
+      .choice-show span {
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: relative;
+      }
+      .choice-show span::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      border-top: 3px solid #fff;
+      border-right: 3px solid #fff;
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin: -8px 0 0 -11px;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      transition: all 0.3s linear;
+      }
+      .choice-box.is-open .choice-show span {
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      transform: scaleX(-1);
+      /*IE*/
+      filter: FlipH;
+      }
     }  
     .adminmainfr{
       clear:both;

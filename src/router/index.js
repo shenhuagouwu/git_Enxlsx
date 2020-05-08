@@ -9,6 +9,33 @@ const routes = [
         path:'/',
         component: () => import('@/views/index/index'),
         name: 'indexPage',
+        children: [
+            {
+                path: '/',
+                component: () => import('@/views/pages/Product'),
+                name: 'Product'
+            },
+            {
+                path: '/Product',
+                component: () => import('@/views/pages/Product'),
+                name: 'Product'
+            },
+            {
+                path: '/News',
+                component: () => import('@/views/pages/News'),
+                name: 'News'
+            },
+            {
+                path: '/wenda',
+                component: () => import('@/views/pages/Wenda'),
+                name: 'wenda'
+            },
+            {
+                path: '/Video',
+                component: () => import('@/views/pages/Video'),
+                name: 'Video'
+            }
+        ]
     }
 ];
 
