@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'wenda'
+  name: 'wendaPage'
 }
 </script>
 

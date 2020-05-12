@@ -1,40 +1,45 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 /* 1. 定义路由组件 */
+import Layout from '@/layout';
+
 Vue.use(Router);
 
 /* 2. 定义路由 */
 const routes = [
     {
         path:'/',
-        component: () => import('@/views/index/index'),
-        name: 'indexPage',
-        children: [
+        redirect:'/',
+        component:Layout,
+        children:[
             {
-                path: '/',
-                component: () => import('@/views/pages/Product'),
-                name: 'Product'
+                path:'/',
+                component: () => import('@/views/index/index'),
+                name: 'indexPage',
+                children:[
+                    {
+                        path:'/',
+                        component: () => import('@/views/timeInterval/index'),
+                        name: 'timeIntervalPage',  
+                    },{
+                        path:'new',
+                        component: () => import('@/views/news/index'),
+                        name: 'newPage',  
+                    },{
+                        path:'product',
+                        component: () => import('@/views/product/index'),
+                        name: 'productPage',  
+                    },{
+                        path:'video',
+                        component: () => import('@/views/video/index'),
+                        name: 'videoPage',  
+                    },{
+                        path:'wenda',
+                        component: () => import('@/views/wenda/index'),
+                        name: 'wendaPage',  
+                    }
+                ]
             },
-            {
-                path: '/Product',
-                component: () => import('@/views/pages/Product'),
-                name: 'Product'
-            },
-            {
-                path: '/News',
-                component: () => import('@/views/pages/News'),
-                name: 'News'
-            },
-            {
-                path: '/wenda',
-                component: () => import('@/views/pages/Wenda'),
-                name: 'wenda'
-            },
-            {
-                path: '/Video',
-                component: () => import('@/views/pages/Video'),
-                name: 'Video'
-            }
         ]
     }
 ];

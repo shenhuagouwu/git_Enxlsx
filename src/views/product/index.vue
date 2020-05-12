@@ -62,7 +62,7 @@
 <script>
 import draggable from "vuedraggable";
 export default {
-  name: "Product",
+  name: "productPage",
   components:{
     draggable
   },

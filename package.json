@@ -21,7 +21,6 @@
     "element-ui": "^2.7.2",
     "jquery": "2.x",
     "js-cookie": "^2.2.0",
-    "moment": "^2.24.0",
     "particles.js": "^2.0.0",
     "qs": "^6.9.3",
     "vue": "^2.6.10",
