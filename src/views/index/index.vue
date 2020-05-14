@@ -1,10 +1,24 @@
 <template>
   <div class="adminmainfr">
     <div class="data-btn">
-      <p class="data-import">
+      <el-upload class="upload-demo" 
+        :multiple='false'
+        :auto-upload='true'
+        list-type='text'
+        :show-file-list='true'
+        :before-upload="beforeUpload"
+        :drag='false'
+        action=''
+        :on-exceed="handleExceed"
+        :http-request="uploadFile" >
+        <el-button slot="trigger" size="small" type="primary">导入询盘数据</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传xlsx文件，且不超过5MB</div>
+      </el-upload> 
+      <!-- <p class="data-import">
         <span>导入数据</span>
+       
         <input type="file" @change="exportData" accept=".xls, .xlsx" class="input-file" />
-      </p>
+      </p> -->
       <div class="data-time">
         <span>时间</span>
         <input name="Time1" type="text" id="Time1" class="searchtime" placeholder="开始时间" />
@@ -27,6 +41,7 @@ export default {
   },
   data() {
     return {
+      fileList:[],
       outColData: [],
       outRowData: [],
       filebox: {},
@@ -59,16 +74,36 @@ export default {
     //   });
     //   this.listshow.splice(pIndex, 1);
     // },
+    beforeUpload (file) {
+      console.log('beforeUpload')
+      console.log(file.type)
+      const isText = file.type === 'application/vnd.ms-excel'
+      const isTextComputer = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      return (isText | isTextComputer)
+    },
+    // 上传文件个数超过定义的数量
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，请删除后继续上传`)
+    },
+    // 上传文件
+    uploadFile (item) {
+      console.log(item);
+      if(item.file){
+        this.exportData(item.file)
+      }else{
+        console.log("文件不存在");
+      }
+    },
     exportData(e) {
       var $this = this;
-      var files = e.target.files;
-      if (e.currentTarget.files.length <= 0) {
-        //如果没有文件名
-        return false;
-      } else if (!/\.(xls|xlsx)$/.test(files[0].name.toLowerCase())) {
-        this.$Message.error("上传格式不正确，请上传xls或者xlsx格式");
-        return false;
-      }
+      // var files = e.target.files;
+      // if (e.currentTarget.files.length <= 0) {
+      //   //如果没有文件名
+      //   return false;
+      // } else if (!/\.(xls|xlsx)$/.test(files[0].name.toLowerCase())) {
+      //   this.$Message.error("上传格式不正确，请上传xls或者xlsx格式");
+      //   return false;
+      // }
       // 用FileReader来读取
       var reader = new FileReader();
       reader.onload = function(ev) {
@@ -129,10 +164,9 @@ export default {
         databox.outColData = $this.outColData;
         databox.outRowData = $this.outRowData;
         $this.$store.dispatch("printdata/handleClick", databox);
-        $this.filebox.outColData = databox.outColData;
-        $this.filebox.outRowData = databox.outRowData;
+        $this.filebox = databox;
       };
-      reader.readAsBinaryString(files[0]);
+      reader.readAsBinaryString(e);
     }
   }
 };

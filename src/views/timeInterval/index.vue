@@ -4,12 +4,12 @@
       <table class="table-template">
         <tbody>
           <tr>
-            <td v-for="(item,index) in brand">{{item}}</td>
+            <td v-for="(item,index) in brand" v-bind:key="index">{{item}}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <ant-vanter :arrlist="arrlist"></ant-vanter>
+    <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
   </div>
   <!-- <draggable class="module" group="people" :list="listshow" @change="datahand">
           <draggable class="list-group" v-if="listshow.length">
@@ -47,7 +47,7 @@ export default {
     // ]),
     databox: function() {
       if (this.$store.getters.databox != "") {
-        return JSON.parse(this.$store.getters.databox);
+        return this.$store.getters.databox;
       } else {
         return "";
       }
@@ -72,12 +72,10 @@ export default {
         });
         this.brand = brandlist;
         console.log(this.brand);
+        this.initAeraChartData(outRowData);
       }
     }
   },
-  // beforeCreate(){
-  //   console.log(this.databox,9999);
-  // },
   mounted() {
     if (this.databox != "") {
       var outRowData = "",
