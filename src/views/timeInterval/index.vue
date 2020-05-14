@@ -1,16 +1,17 @@
 <template>
-    <div>
-      <div class="data-show">
-            <table class="table-template">
-              <tbody>
-                <tr>
-                  <td v-for="(item,index) in brand">{{item}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- <draggable class="module" group="people" :list="listshow" @change="datahand">
+  <div>
+    <div class="data-show">
+      <table class="table-template">
+        <tbody>
+          <tr>
+            <td v-for="(item,index) in brand">{{item}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ant-vanter :arrlist="arrlist"></ant-vanter>
+  </div>
+  <!-- <draggable class="module" group="people" :list="listshow" @change="datahand">
           <draggable class="list-group" v-if="listshow.length">
             <div class="list-group-item" v-for="(element,index) in listshow" :key="index">
               <div class="title">
@@ -21,95 +22,141 @@
             </div>
           </draggable>
           <div class="no-data" v-else>很抱歉，没有数据可显示！</div>
-        </draggable> -->
-    </div>
+  </draggable>-->
 </template>
 <script>
 // import { mapGetters } from 'vuex';
+import antVanter from "../antVanter/LineChart";
 export default {
-  name: 'timeIntervalPage',
-  props: ['filebox'],
-  data () {
-    return {
-        brand:[],
-    }
+  name: "timeIntervalPage",
+  components: {
+    antVanter
   },
-  computed:{
-      // ...mapGetters([
-      //     'databox',
-      // ]),
-       databox: function () {
-         if(this.$store.getters.databox!=''){
-           return JSON.parse(this.$store.getters.databox);
-         }else{
-           return "";
-         }
-        }
+  props: ["filebox"],
+  data() {
+    return {
+      brand: [],
+      areaData: [],
+      newlist: [],
+      arrlist: []
+    };
+  },
+  computed: {
+    // ...mapGetters([
+    //     'databox',
+    // ]),
+    databox: function() {
+      if (this.$store.getters.databox != "") {
+        return JSON.parse(this.$store.getters.databox);
+      } else {
+        return "";
+      }
+    }
   },
   watch: {
-    filebox: function (val) { 
-    if(val!=""){
-      var outRowData='',outColData='';
-      console.log(val);      
-      outColData = val.outColData;
-      console.log(outColData);
-      outRowData = val.outRowData;
-      console.log(outRowData);
-      var brandlist=[];
-      outColData[0].forEach(function(item,index){
-      　　//判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
-      　　if($.inArray(item,brandlist)==-1) {
-      　　　　brandlist.push(item);
-      　　}
-      })
-      this.brand=brandlist;
-      console.log(this.brand);
-    }
+    filebox: function(val) {
+      if (val != "") {
+        var outRowData = "",
+          outColData = "";
+        console.log(val);
+        outColData = val.outColData;
+        console.log(outColData);
+        outRowData = val.outRowData;
+        console.log(outRowData);
+        var brandlist = [];
+        outColData[0].forEach(function(item, index) {
+          //判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
+          if ($.inArray(item, brandlist) == -1) {
+            brandlist.push(item);
+          }
+        });
+        this.brand = brandlist;
+        console.log(this.brand);
+      }
     }
   },
   // beforeCreate(){
   //   console.log(this.databox,9999);
   // },
-  mounted(){
-    if(this.databox!=""){
-      var outRowData='',outColData='';
-      console.log(this.databox);      
+  mounted() {
+    if (this.databox != "") {
+      var outRowData = "",
+        outColData = "";
+      console.log(this.databox);
       outColData = this.databox.outColData;
       console.log(outColData);
       outRowData = this.databox.outRowData;
       console.log(outRowData);
-      var brandlist=[];
-      outColData[0].forEach(function(item,index){
-      　　//判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
-      　　if($.inArray(item,brandlist)==-1) {
-      　　　　brandlist.push(item);
-      　　}
-      })
-      this.brand=brandlist;
+      var brandlist = [];
+      outColData[0].forEach(function(item, index) {
+        //判断元素是否存在于new_arr中，如果不存在则插入到new_arr的最后
+        if ($.inArray(item, brandlist) == -1) {
+          brandlist.push(item);
+        }
+      });
+      this.brand = brandlist;
       console.log(this.brand);
+      this.initAeraChartData(outRowData);
+    }
+  },
+  methods: {
+    initAeraChartData: function(Data) {
+      Data.splice(0, 1);
+      //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
+      let OldJson = Data.map((item, index) => {
+        var newJson = {};
+        newJson.name = item[0];
+        newJson.time = item[4];
+        newJson.number = 1;
+        return newJson;
+      });
+      console.log(OldJson);
+      //数组去重然后放在一个新的数组里面
+      var hash = {};
+      var arrlist = [];
+      arrlist = OldJson.reduce(function(item, next) {
+        const key = `${next.name}${next.time}`;
+        hash[key] ? "" : (hash[key] = true && item.push(next));
+        return item;
+      }, []);
+      console.log(arrlist);
+
+      //把新的数组与之前的数组进行对比如果相同就让number++最后得出vant-v需要的数组
+
+      OldJson.map(function(item, index) {
+        arrlist.map(function(item1, index1) {
+          if (item.name == item1.name && item.time == item1.time) {
+            item1.number++;
+          }
+        });
+      });
+      console.log(arrlist);
+      this.arrlist = arrlist;
+      //
     }
   }
-}
+};
 </script>
 <style lang="scss">
 .data-show {
   margin: 30px 0 0;
   .table-template {
-      width: 100%;
-      max-width: 100%;
-      border-collapse: separate;
-      tr:nth-child(odd) {
-        background: #e8eff9;
-        &:nth-child(even) {
-          background: #ffffff;
-        }
+    width: 100%;
+    max-width: 100%;
+    border-collapse: separate;
+    tr:nth-child(odd) {
+      background: #e8eff9;
+      &:nth-child(even) {
+        background: #ffffff;
       }
-      td,th {
-          text-align: center;
-          padding: 10px;
-          line-height: 20px;
-          word-break: break-all;
-      }
+    }
+    td,
+    th {
+      text-align: center;
+      padding: 10px;
+      line-height: 20px;
+      word-break: break-all;
+    }
   }
 }
 .module {
@@ -135,7 +182,7 @@ export default {
     z-index: -1;
   }
   .list-group {
-    overflow: hidden;  
+    overflow: hidden;
     .list-group-item {
       width: 50%;
       background: #fff;

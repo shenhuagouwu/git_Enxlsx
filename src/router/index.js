@@ -8,36 +8,36 @@ Vue.use(Router);
 /* 2. 定义路由 */
 const routes = [
     {
-        path:'/',
-        redirect:'/',
-        component:Layout,
-        children:[
+        path: '/',
+        redirect: '/',
+        component: Layout,
+        children: [
             {
-                path:'/',
+                path: '/',
                 component: () => import('@/views/index/index'),
                 name: 'indexPage',
-                children:[
+                children: [
                     {
-                        path:'/',
+                        path: '/',
                         component: () => import('@/views/timeInterval/index'),
-                        name: 'timeIntervalPage',  
-                    },{
-                        path:'new',
+                        name: 'timeIntervalPage',
+                    }, {
+                        path: 'new',
                         component: () => import('@/views/news/index'),
-                        name: 'newPage',  
-                    },{
-                        path:'product',
+                        name: 'newPage',
+                    }, {
+                        path: 'product',
                         component: () => import('@/views/product/index'),
-                        name: 'productPage',  
-                    },{
-                        path:'video',
+                        name: 'productPage',
+                    }, {
+                        path: 'video',
                         component: () => import('@/views/video/index'),
-                        name: 'videoPage',  
-                    },{
-                        path:'wenda',
+                        name: 'videoPage',
+                    }, {
+                        path: 'wenda',
                         component: () => import('@/views/wenda/index'),
-                        name: 'wendaPage',  
-                    }
+                        name: 'wendaPage',
+                    },
                 ]
             },
         ]
@@ -48,7 +48,7 @@ const routes = [
 const router = new Router({
     /* 4. 传 `routes` 配置，这里是缩写，相当于 routes: routes */
     //mode:'history',
-    routes 
+    routes
 });
 /* 5. 暴露出该文件 */
 export default router;
