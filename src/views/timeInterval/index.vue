@@ -23,9 +23,10 @@ export default {
   components: {
     antVanter
   },
-  props: ["filebox"],
+  props: ["filebox", "searchParam"],
   data() {
     return {
+      name: [],
       areaData: [],
       newlist: [],
       arrlist: []
@@ -45,7 +46,7 @@ export default {
   // },
   watch: {
     filebox: function(val) {
-      if (val != "") {
+      if (val.rowData != "") {
         // var outRowData = "",
         //   outColData = "";
         // outColData = val.outColData;
@@ -66,9 +67,23 @@ export default {
   methods: {
     initAeraChartData: function(Data) {
       //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
-      let OldJson = Data.map((item, index) => {
+      let OldJson = Data.rowData.map((item, index) => {
         var newJson = {};
-        newJson.name = item[0];
+        if (
+          Data.searchData.brands.length > 1 ||
+          (Data.searchData.brands.length == 0 &&
+            Data.searchData.continents.length == 0 &&
+            Data.searchData.countries.length == 0)
+        ) {
+          newJson.name = item[0];
+        } else {
+          if (Data.searchData.continents.length >= 1) {
+            newJson.name = item[9];
+          }
+          if (Data.searchData.countries.length >= 1) {
+            newJson.name = item[10];
+          }
+        }
         newJson.time = item[4];
         newJson.number = 1;
         return newJson;
@@ -89,13 +104,87 @@ export default {
           }
         });
       });
-      this.arrlist = arrlist;
+      console.log(arrlist, 4444);
+      // this.arrlist = arrlist;
+      this.arrlist = this.sortlist(arrlist, this.screenlist(arrlist));
+    },
+    sortlist: function(element, list) {
+      var typeList = [
+        "0-1",
+        "1-2",
+        "2-3",
+        "3-4",
+        "4-5",
+        "5-6",
+        "6-7",
+        "7-8",
+        "8-9",
+        "9-10",
+        "10-11",
+        "11-12",
+        "12-13",
+        "13-14",
+        "14-15",
+        "15-16",
+        "16-17",
+        "17-18",
+        "18-19",
+        "19-20",
+        "20-21",
+        "21-22",
+        "22-23",
+        "23-24"
+      ];
+      //   var brandList = ["红星", "中德", "富特"];
+      var brandList = list;
+      var brandData = [];
+      brandList.forEach(function(item) {
+        var itemArray = [];
+        element.forEach(function(items) {
+          if (item == items.name) {
+            itemArray.push(items);
+          }
+        });
+        brandData.push(itemArray);
+      });
+      var sortList = [];
+      brandData.forEach(function(items) {
+        typeList.forEach(function(item) {
+          var itemData = {};
+          itemData.time = item;
+          var itemTime = items.find(function(e) {
+            return e.time == item;
+          });
+          if (itemTime) {
+            itemData.number = itemTime.number;
+            itemData.name = itemTime.name;
+          } else {
+            itemData.number = 0;
+            itemData.name = items[0].name;
+          }
+          sortList.push(itemData);
+        });
+      });
+      console.log(sortList, 9999);
+
+      return sortList;
+    },
+    screenlist: function(element) {
+      //brandList是根据选择来确定 screenlist是根据所需要的条件筛选得出的数组
+      var result = [];
+      for (let index = 0; index < element.length; index++) {
+        if (result.indexOf(element[index].name) == -1) {
+          result.push(element[index].name);
+        }
+      }
+      console.log(result);
+
+      return result;
     }
   }
 };
 </script>
 <style lang="scss">
-
 .module {
   width: 100%;
   min-height: 360px;
