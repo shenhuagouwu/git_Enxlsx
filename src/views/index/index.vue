@@ -23,6 +23,7 @@
             class="selectbrands"
             v-bind:disabled="disabledbrands"
             multiple
+            collapse-tags
             @change="handelBrands"
             placeholder="品牌选择"
           >
@@ -35,6 +36,7 @@
             class="selectcountries"
             v-bind:disabled="disabledcountrie"
             multiple
+            collapse-tags
             @change="handelCountries"
             placeholder="国家选择"
           >
@@ -47,6 +49,7 @@
             class="selectcontinents"
             v-bind:disabled="disabledcontinents"
             multiple
+            collapse-tags
             @change="handelContinents"
             placeholder="大洲选择"
           >
@@ -74,7 +77,10 @@
         <span class="searchbtn" v-on:click="handleQueryBtn">查询</span>
       </div>
     </div>
-    <router-view v-bind:filebox="filebox" v-bind:searchParam="searchParam" />
+    <div class="chart-page">
+      <h2>{{h2Font}}</h2>
+      <router-view v-bind:filebox="filebox" />
+    </div>
   </div>
 </template>
 <script>
@@ -91,6 +97,7 @@ export default {
       fileList: [],
       outColData: [],
       outRowData: [],
+      h2Font:"各品牌各时段询盘分析",
       filebox: {
         rowData: "",
         searchData: {}
@@ -182,6 +189,7 @@ export default {
     }
   },
   methods: {
+    // 上传文件上传前事件
     beforeUpload(file) {
       const isText = file.type === "application/vnd.ms-excel";
       const isTextComputer =
@@ -201,6 +209,7 @@ export default {
         console.log("文件不存在");
       }
     },
+    // 初始化上传文件获取的数据
     exportData(e) {
       var $this = this;
       // 用FileReader来读取
@@ -431,12 +440,6 @@ export default {
       var $this = this;
       $this.countries = val;
       var CountriesNum = $this.countries.length;
-      console.log($this.brands.length);
-      console.log($this.brands);
-      console.log($this.countries.length);
-      console.log($this.countries);
-      console.log($this.continents.length);
-      console.log($this.continents);
       if (CountriesNum < 1) {
         $this.disabledcontinents = false;
       } else {
@@ -506,6 +509,7 @@ export default {
         }
       }
     },
+    // 提交满足筛选条件的数据给子组件
     handleQueryBtn() {
       var $this = this;
       $this.searchParam.brands = $this.brands;
@@ -522,7 +526,7 @@ export default {
       filebox.searchData = $this.searchParam;
       filebox.rowData = $this.filterResult($this.outRowData, $this.searchParam);
       $this.filebox = filebox;
-      console.log($this.filebox, 3333);
+      console.log($this.filebox, "提交筛选数据");
     }
   }
 };
@@ -645,5 +649,22 @@ export default {
 .add-template span {
   font-size: 25px;
   vertical-align: -3px;
+}
+.chart-page{
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-top: 30px;
+  h2{
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0;
+    color: #555;
+  }
 }
 </style>

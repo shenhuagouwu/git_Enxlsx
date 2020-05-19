@@ -1,9 +1,16 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-14 16:27:38
+ * @LastEditTime: 2020-05-19 10:27:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \git_Enxlsx\src\views\antVanter\LineChart.vue
+--> 
 <template>
   <div id="LineChart">
     <div :id="id"></div>
   </div>
 </template>
-
 <script>
 import Vue from "vue";
 const G2 = require("@antv/g2"); // 1. 引入g2plot
@@ -27,12 +34,15 @@ export default {
   // 生命周期 - 载入后, Vue 实例挂载到实际的 DOM 操作完成，一般在该过程进行 Ajax 交互
   mounted() {
     this.initComponent();
-    console.log(this.arrlist, 8888);
+  },
+  watch:{
+    arrlist:function(val){
+      this.chart.changeData(val);
+    }
   },
   // 方法集合
   methods: {
     initComponent() {
-      console.log(this.$el.clientWidth);
       const elWidthValue = this.$el.clientWidth;
       // 此函数为个人习惯,喜欢创建一个初始化的函数
       const chart = new G2.Chart({
@@ -41,58 +51,16 @@ export default {
         autoFit: false,
         height: 500
       });
-      const defs = {
-        x: {
-          type: "time", // 指定 cat 分类类型
-          values: [
-            "0-1",
-            "1-2",
-            "2-3",
-            "3-4",
-            "4-5",
-            "5-6",
-            "6-7",
-            "7-8",
-            "8-9",
-            "9-10",
-            "10-11",
-            "11-12",
-            "12-13",
-            "13-14",
-            "14-15",
-            "15-16",
-            "16-17",
-            "17-18",
-            "18-19",
-            "19-20",
-            "20-21",
-            "21-22",
-            "22-23",
-            "23-24"
-          ]
-        }
-      };
-
-      chart.source(this.newlist, defs);
-
-      //   chart.scale("year", {
-      //     range: [0.25, 0.75] //改变x轴两边的留白
-
-      //   });
+      chart.source(this.newlist);
       chart.scale("number", {
-        //改变y轴的最小最大及间隔+1
         min: 0,
-        max: 10,
         tickInterval: 1
       });
-
       chart
         .line()
         .position("time*number")
         .color("name")
         .shape("smooth")
-        .label("number"); //坐标轴上显示数字
-
       this.chart = chart;
       this.chart.render();
     }

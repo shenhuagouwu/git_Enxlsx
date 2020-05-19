@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-14 16:27:38
+ * @LastEditTime: 2020-05-19 10:59:55
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \git_Enxlsx\src\layout\components\HeaderModule.vue
+--> 
 <template>    
     <div class="adminmaintop">
-        <p class="adminmaintoplogo"><span><img src="../../assets/images/logo.png" alt=""></span>红星机器后台管理系统</p>
+        <p class="adminmaintoplogo"><span><img src="../../assets/images/logo.png" alt=""></span>英文推广数据分析系统</p>
     </div>
 </template>
 <script>
@@ -14,17 +22,22 @@ export default {
 <style lang="scss">
   .adminmaintop{
     overflow:hidden;
-    @include gradient-horizontal(#f13331,#f13331, #7637eb);
-    padding:15px 30px 20px 30px;
+    background: #21262e;
+    padding:20px 30px 20px 30px;
     .adminmaintoplogo{
       float:left;
       color:#fff;
-      font-size:27px;
-      line-height:56px;
+      font-size:18px;
+      line-height:32px;
       span{
+        display: block;
         float:left;
-        width:80px;
-        margin-right:15px;
+        height: 32px;
+        margin-right:10px;
+        img{
+          display: block;
+          height: 100%;
+        }
       }
     }
   }

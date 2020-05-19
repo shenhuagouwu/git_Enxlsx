@@ -5,7 +5,7 @@
                 <router-link tag="span" v-bind:to="item.url">{{item.name}}</router-link>                
             </li>
           </ul>
-          <div class="choice-box" v-bind:class="isOpen?'is-open':''">
+          <!-- <div class="choice-box" v-bind:class="isOpen?'is-open':''">
               <draggable
                 tag="ul"
                 class="list-ul"
@@ -16,7 +16,7 @@
           </div>
           <div class="choice-show" @click="choicetoggle" v-bind:class="isOpen?'is-open':''">
             <span></span>
-          </div>
+          </div> -->
       </div>
 </template>
 <script>
@@ -37,7 +37,7 @@ export default {
             name:'谷歌询盘分析',
             isOn:false,
             ismain:true,
-            url:"/",
+            url:"/index",
             pid:0
           },
           {
@@ -46,7 +46,7 @@ export default {
             name:'时段分析',
             isOn:true,
             ismain:false,
-            url:"/",
+            url:"/index/time",
             pid:1,
             children:{
               childtnum:1,
@@ -54,37 +54,7 @@ export default {
               childcountry:'拖拽国家',
               childcontinent:'大洲时段'
             }
-          },              
-          {
-            id:3,
-            type:'Countryanalysis',
-            name:'国家分析',
-            isOn:false,
-            ismain:false,
-            url:"/new",
-            pid:1,
-            children:{
-              childtnum:2,
-              childtime:'拖拽时段',
-              childcountry:'拖拽国家',
-              childcontinent:'大洲时段'
-            }
-          },              
-          {
-            id:4,
-            type:'Continentanalysis',
-            name:'大洲分析',
-            isOn:false,
-            ismain:false,
-            url:"/product",
-            pid:1,
-            children:{
-              childtnum:3,
-              childtime:'拖拽时段',
-              childcountry:'拖拽国家',
-              childcontinent:'大洲时段'
-            }
-          },              
+          },          
           {
             id:5,
             type:'Dateanalysis',
@@ -264,7 +234,6 @@ export default {
                 top:0px;
                 bottom:0px;
                 width:2px;
-                @include gradient-vertical(#f13331,#f13331, #7637eb);
               }
             }
           }
@@ -272,7 +241,8 @@ export default {
             background:#121417;
             color: #959da9;
             span{
-               padding-left:20px;               
+               padding-left:20px;
+               font-weight: bold;           
                &:hover{              
                   background:#121417;
                   color: #959da9;
@@ -284,7 +254,6 @@ export default {
                 top:0px;
                 bottom:0px;
                 width:2px;
-                @include gradient-vertical(#f13331,#f13331, #7637eb);
                }
             }
           }
@@ -299,7 +268,6 @@ export default {
                 top:0px;
                 bottom:0px;
                 width:2px;
-                @include gradient-vertical(#f13331,#f13331, #7637eb);
               }
             }
           }

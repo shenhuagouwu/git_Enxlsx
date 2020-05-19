@@ -2,28 +2,15 @@
   <div>
     <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
   </div>
-  <!-- <draggable class="module" group="people" :list="listshow" @change="datahand">
-          <draggable class="list-group" v-if="listshow.length">
-            <div class="list-group-item" v-for="(element,index) in listshow" :key="index">
-              <div class="title">
-                <h4>{{element.name}}</h4>
-                <span class="data-delete" @click.stop="deleteItem(element.id)">x</span>
-              </div>
-              <p class="text">{{element.text}}</p>
-            </div>
-          </draggable>
-          <div class="no-data" v-else>很抱歉，没有数据可显示！</div>
-  </draggable>-->
 </template>
 <script>
-// import { mapGetters } from 'vuex';
 import antVanter from "../antVanter/LineChart";
 export default {
   name: "timeIntervalPage",
   components: {
     antVanter
   },
-  props: ["filebox", "searchParam"],
+  props: ["filebox"],
   data() {
     return {
       name: [],
@@ -32,39 +19,15 @@ export default {
       arrlist: []
     };
   },
-  // computed: {
-  //   // ...mapGetters([
-  //   //     'databox',
-  //   // ]),
-  //   databox: function() {
-  //     if (this.$store.getters.databox != "") {
-  //       return this.$store.getters.databox;
-  //     } else {
-  //       return "";
-  //     }
-  //   }
-  // },
   watch: {
     filebox: function(val) {
       if (val.rowData != "") {
-        // var outRowData = "",
-        //   outColData = "";
-        // outColData = val.outColData;
-        // outRowData = val.outRowData;
         this.initAeraChartData(val);
       }
     }
   },
-  // mounted() {
-  //   if (this.databox != "") {
-  //     var outRowData = "",
-  //       outColData = "";
-  //     outColData = this.databox.outColData;
-  //     outRowData = this.databox.outRowData.splice(0,1);
-  //     this.initAeraChartData(outRowData);
-  //   }
-  // },
   methods: {
+    // 初始化图表数据
     initAeraChartData: function(Data) {
       //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
       let OldJson = Data.rowData.map((item, index) => {
@@ -104,10 +67,10 @@ export default {
           }
         });
       });
-      console.log(arrlist, 4444);
-      // this.arrlist = arrlist;
       this.arrlist = this.sortlist(arrlist, this.screenlist(arrlist));
+      console.log(this.arrlist,"图表最终使用数据");
     },
+    // 排序列表并补齐缺失数据
     sortlist: function(element, list) {
       var typeList = [
         "0-1",
@@ -135,7 +98,6 @@ export default {
         "22-23",
         "23-24"
       ];
-      //   var brandList = ["红星", "中德", "富特"];
       var brandList = list;
       var brandData = [];
       brandList.forEach(function(item) {
@@ -165,20 +127,16 @@ export default {
           sortList.push(itemData);
         });
       });
-      console.log(sortList, 9999);
-
       return sortList;
     },
+    // 获取图表中的线条所属名称列表
     screenlist: function(element) {
-      //brandList是根据选择来确定 screenlist是根据所需要的条件筛选得出的数组
       var result = [];
       for (let index = 0; index < element.length; index++) {
         if (result.indexOf(element[index].name) == -1) {
           result.push(element[index].name);
         }
       }
-      console.log(result);
-
       return result;
     }
   }
