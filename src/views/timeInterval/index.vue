@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="chart-page">
+    <h2>{{h2Font}}</h2>
     <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
   </div>
 </template>
@@ -13,6 +14,7 @@ export default {
   props: ["filebox"],
   data() {
     return {
+      h2Font:"各品牌各时段询盘分析",
       name: [],
       areaData: [],
       newlist: [],
@@ -220,6 +222,23 @@ export default {
         line-height: 300px;
       }
     }
+  }
+}
+.chart-page{
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-top: 30px;
+  h2{
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0;
+    color: #555;
   }
 }
 </style>

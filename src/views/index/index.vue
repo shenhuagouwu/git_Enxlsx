@@ -77,10 +77,7 @@
         <span class="searchbtn" v-on:click="handleQueryBtn">查询</span>
       </div>
     </div>
-    <div class="chart-page">
-      <h2>{{h2Font}}</h2>
-      <router-view v-bind:filebox="filebox" />
-    </div>
+    <router-view v-bind:filebox="filebox" />
   </div>
 </template>
 <script>
@@ -97,7 +94,6 @@ export default {
       fileList: [],
       outColData: [],
       outRowData: [],
-      h2Font:"各品牌各时段询盘分析",
       filebox: {
         rowData: "",
         searchData: {}
@@ -649,22 +645,5 @@ export default {
 .add-template span {
   font-size: 25px;
   vertical-align: -3px;
-}
-.chart-page{
-  width: 100%;
-  overflow: hidden;
-  background: #ffffff;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  margin-top: 30px;
-  h2{
-    width: 100%;
-    height: 48px;
-    line-height: 48px;
-    font-size: 24px;
-    text-align: center;
-    margin: 20px 0;
-    color: #555;
-  }
 }
 </style>
