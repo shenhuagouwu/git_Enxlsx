@@ -23,12 +23,34 @@ export default {
   },
   watch: {
     filebox: function(val) {
-      if (val.rowData != "") {
+      if (val.rowData != ""||val.rowData.length>=0) {
         this.initAeraChartData(val);
       }
     }
   },
   methods: {
+    editFont:function(data){
+      var sametext = "各时段询盘分析";
+      if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length == 0){
+        this.h2Font=data.brands + sametext;
+      }else if(data.brands.length == 1 && data.countries.length == 1 && data.continents.length == 0){
+        this.h2Font=data.brands + data.countries + sametext;
+      }else if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length == 1){
+        this.h2Font=data.brands + data.continents + sametext;
+      }else if(data.brands.length == 1 && data.countries.length > 1 && data.continents.length == 0){
+        this.h2Font=data.brands + "各个国家" + sametext;
+      }else if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length > 1){
+        this.h2Font=data.brands + "各个大洲" + sametext;
+      }else if(data.brands.length > 1 && data.countries.length == 0 && data.continents.length == 0){
+        this.h2Font=this.h2Font;
+      }else if(data.brands.length > 1 && data.countries.length == 1 && data.continents.length == 0){
+        this.h2Font="各个品牌" + data.countries + sametext;
+      }else if(data.brands.length > 1 && data.countries.length == 0 && data.continents.length == 1){
+        this.h2Font="各个品牌" + data.continents + sametext;
+      }else{
+        this.h2Font=this.h2Font;
+      }
+    },
     // 初始化图表数据
     initAeraChartData: function(Data) {
       //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
@@ -69,6 +91,7 @@ export default {
           }
         });
       });
+      this.editFont(Data.searchData);
       this.arrlist = this.sortlist(arrlist, this.screenlist(arrlist));
       console.log(this.arrlist,"图表最终使用数据");
     },

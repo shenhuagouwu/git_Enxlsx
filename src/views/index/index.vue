@@ -386,6 +386,7 @@ export default {
       var $this = this;
       $this.brands = val;
       var brandNum = $this.brands.length;
+      console.log(val);
       if ($this.countries.length >= 1 && $this.continents.length < 1) {
         if ($this.countries.length > 1) {
           if ($this.brands.length < 1) {
