@@ -47,6 +47,10 @@ export default {
         this.h2Font="各个品牌" + data.countries + sametext;
       }else if(data.brands.length > 1 && data.countries.length == 0 && data.continents.length == 1){
         this.h2Font="各个品牌" + data.continents + sametext;
+      }else if(data.brands.length == 0 && data.countries.length == 1 && data.continents.length == 0){
+        this.h2Font=data.countries + sametext;
+      }else if(data.brands.length == 0 && data.countries.length == 0 && data.continents.length == 1){
+        this.h2Font=data.continents + sametext;
       }else{
         this.h2Font=this.h2Font;
       }
