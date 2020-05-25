@@ -12,8 +12,6 @@
     </div>
 </template>
 <script>
-import XLSX from 'xlsx'
-import moment from 'moment'
 export default {
     name:"HeaderModule",
 }

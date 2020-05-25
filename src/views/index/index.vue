@@ -67,7 +67,6 @@
 </template>
 <script>
 import draggable from "vuedraggable";
-import XLSX from "xlsx";
 import moment from "moment";
 export default {
   name: "indexPage",

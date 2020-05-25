@@ -17,10 +17,6 @@ export default {
   components: {
     HeaderModule,
     LeftModule,
-  },
-  computed:{
-  },
-  methods: {
   }
 }
 </script>
