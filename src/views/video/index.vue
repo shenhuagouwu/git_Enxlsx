@@ -1,5 +1,5 @@
 <template>
-  <div class="list">视频分类</div>
+  <div class="list">来源方式分析</div>
 </template>
 
 <script>

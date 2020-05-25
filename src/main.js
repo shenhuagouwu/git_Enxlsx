@@ -13,12 +13,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '@/styles/index.scss'; // global css
 import store from './store';
 import App from './app.vue';
+import api from './api/index.js';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
+Vue.prototype.$ELEMENT = { size: 'mini', zIndex: 3000 };
 Vue.use(VueAwesomeSwiper);
 Vue.config.productionTip = false;
-Vue.prototype.$ELEMENT = { size: 'mini', zIndex: 3000 };
 Vue.use(ElementUI);
+Vue.prototype.$api = api;
 require('jquery');
 
 new Vue({

@@ -1,5 +1,5 @@
 <template>
-  <div class="list">问答分类</div>
+  <div class="list">渠道分析</div>
 </template>
 
 <script>

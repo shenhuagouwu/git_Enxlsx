@@ -9,6 +9,7 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const notifier = require('node-notifier');// 友好的终端错误显示方式
 const { VueLoaderPlugin } = require('vue-loader');
 const postcss = require('./postcss.config');
+var config = require('./src/config');
 module.exports = {
     // 入口文件配置项
     entry:{
@@ -286,22 +287,13 @@ module.exports = {
     ],
     // 开发服务配置项
     devServer: {
-        port: 8083,
+        port: config.dev.port,
         contentBase: path.resolve(__dirname, 'dist'),
-        historyApiFallback: true,
         host: ip,
         overlay:true,
         hot:true,
         inline:true,
-    //     proxy:{
-    //      '/api': {
-    //       target: 'http://172.16.10.117:8083',
-    //       changeOrigin: true,
-    //       pathRewrite: {
-    //         '^/api': ''
-    //       }
-    //     }
-    //    },
+        proxy:config.dev.proxyTable,
         after() {
             open(`http://${ip}:${this.port}`)
             .then(() => {
@@ -310,7 +302,7 @@ module.exports = {
             .catch(err => {
                 console.log(chalk.red(err));
             });
-        }
+        },
     },
     // 模版解析配置项
     resolve: {

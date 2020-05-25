@@ -28,7 +28,7 @@ export default {
       }
     }
   },
-  methods: {
+  methods: { 
     editFont:function(data){
       var sametext = "各时段询盘分析";
       if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length == 0){
@@ -57,6 +57,7 @@ export default {
     },
     // 初始化图表数据
     initAeraChartData: function(Data) {
+      console.log(Data,'data')
       //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
       let OldJson = Data.rowData.map((item, index) => {
         var newJson = {};
@@ -66,16 +67,39 @@ export default {
             Data.searchData.continents.length == 0 &&
             Data.searchData.countries.length == 0)
         ) {
-          newJson.name = item[0];
+          newJson.name = item.brands;
         } else {
           if (Data.searchData.continents.length >= 1) {
-            newJson.name = item[9];
+            newJson.name = item.continent;
           }
           if (Data.searchData.countries.length >= 1) {
-            newJson.name = item[10];
+            newJson.name = item.area;
           }
         }
-        newJson.time = item[4];
+        var Datatime=item.datetime.split(' ')[1].split(':')[0];
+        if(Datatime=="00"){newJson.time='0-1';}
+        if(Datatime=="01"){newJson.time='1-2';}
+        if(Datatime=="02"){newJson.time='2-3';}
+        if(Datatime=="03"){newJson.time='3-4';}
+        if(Datatime=="04"){newJson.time='4-5';}
+        if(Datatime=="05"){newJson.time='5-6';}
+        if(Datatime=="06"){newJson.time='6-7';}
+        if(Datatime=="07"){newJson.time='7-8';}
+        if(Datatime=="08"){newJson.time='8-9';}
+        if(Datatime=="09"){newJson.time='9-10';}
+        if(Datatime=="10"){newJson.time='10-11';}
+        if(Datatime=="11"){newJson.time='11-12';}
+        if(Datatime=="12"){newJson.time='12-13';}
+        if(Datatime=="13"){newJson.time='13-14';}
+        if(Datatime=="14"){newJson.time='14-15';}
+        if(Datatime=="15"){newJson.time='15-16';}
+        if(Datatime=="16"){newJson.time='16-17';}
+        if(Datatime=="17"){newJson.time='17-18';}
+        if(Datatime=="18"){newJson.time='18-19';}
+        if(Datatime=="19"){newJson.time='19-20';}
+        if(Datatime=="21"){newJson.time='21-22';}
+        if(Datatime=="22"){newJson.time='22-23';}
+        if(Datatime=="23"){newJson.time='23-24';}
         newJson.number = 1;
         return newJson;
       });

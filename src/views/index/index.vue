@@ -1,21 +1,6 @@
 <template>
   <div class="adminmainfr">
     <div class="data-btn">
-      <el-upload
-        class="upload-demo"
-        :multiple="false"
-        :auto-upload="true"
-        list-type="text"
-        :show-file-list="true"
-        :before-upload="beforeUpload"
-        :drag="false"
-        action
-        :on-exceed="handleExceed"
-        :http-request="uploadFile"
-      >
-        <el-button slot="trigger" size="small" type="primary">导入询盘数据</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传xlsx文件，且不超过5MB</div>
-      </el-upload>
       <div class="searchbox">
         <div class="data_brand">
           <el-select
@@ -92,7 +77,7 @@ export default {
   data() {
     return {
       fileList: [],
-      outColData: [],
+      outData: [],
       outRowData: [],
       filebox: {
         rowData: "",
@@ -101,18 +86,6 @@ export default {
       disabledbrands: false,
       disabledcountrie: false,
       disabledcontinents: false,
-      listshow: [
-        {
-          id: 1,
-          name: "1月询盘",
-          text: "100"
-        },
-        {
-          id: 2,
-          name: "2月询盘",
-          text: "200"
-        }
-      ],
       pickerOptions: {
         shortcuts: [
           {
@@ -162,137 +135,48 @@ export default {
       continents: [] // 大洲
     };
   },
-  computed: {
-    databox: function() {
-      if (this.$store.getters.databox != "") {
-        return this.$store.getters.databox;
-      } else {
-        return "";
-      }
-    }
-  },
   mounted() {
-    if (this.databox != "") {
-      this.outColData = this.databox.outColData;
-      this.outRowData = this.databox.outRowData;
-      //品牌  国家  大洲去重
-      this.heavyData(
-        this.outColData[0],
-        this.outColData[9],
-        this.outColData[10]
-      );
-      this.handleQueryBtn();
-    }
+    this.getDetailInfo();
   },
-  methods: {
-    // 上传文件上传前事件
-    beforeUpload(file) {
-      const isText = file.type === "application/vnd.ms-excel";
-      const isTextComputer =
-        file.type ===
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-      return isText | isTextComputer;
-    },
-    // 上传文件个数超过定义的数量
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 1 个文件，请删除后继续上传`);
-    },
-    // 上传文件
-    uploadFile(item) {
-      if (item.file) {
-        this.exportData(item.file);
-      } else {
-        console.log("文件不存在");
-      }
-    },
-    // 初始化上传文件获取的数据
-    exportData(e) {
+  methods: {    
+    getDetailInfo:function(){
       var $this = this;
-      // 用FileReader来读取
-      var reader = new FileReader();
-      reader.onload = function(ev) {
-        var data = ev.target.result;
-        var workbook = XLSX.read(data, {
-          type: "binary",
-          cellDates: true
-        });
-        var wsname = workbook.SheetNames[0]; //取第一张表
-        var worksheet = workbook.Sheets[wsname]; //获取工作表
-        var range = XLSX.utils.decode_range(worksheet["!ref"]);
-        //保存数据范围数据
-        var row_end = range.e.r;
-        var col_end = range.e.c;
-        var j,
-          i,
-          addr,
-          cell,
-          cols = [],
-          rows = [],
-          col_data = [],
-          row_data = [];
-        for (j = 0; j <= col_end; j++) {
-          col_data = []; //清空接收数据
-          for (i = 0; i <= row_end; i++) {
-            addr = XLSX.utils.encode_col(j) + XLSX.utils.encode_row(i);
-            cell = worksheet[addr];
-            if (j == 3) {
-              cell.v = moment(cell.v).format("H:M");
-            }
-            if (cell) {
-              col_data.push(cell.v);
-            } else {
-              col_data.push("");
-            }
-          }
-          cols.push(col_data.slice(1));
-        }
-        for (i = 0; i <= row_end; i++) {
-          row_data = []; //清空接收数据
-          for (j = 0; j <= col_end; j++) {
-            addr = XLSX.utils.encode_col(j) + XLSX.utils.encode_row(i);
-            cell = worksheet[addr];
-            if (j == 3) {
-              cell.v = moment(cell.v).format("H:M");
-            }
-            if (cell) {
-              row_data.push(cell.v);
-            } else {
-              row_data.push("");
-            }
-          }
-          rows.push(row_data);
-        }
-        var rowData = [];
-        rows.forEach(function(item, index) {
-          if (index > 0) {
-            rowData.push(item);
-          }
-        });
-        $this.outColData = cols;
-        $this.outRowData = rowData;
-        var databox = {};
-        databox.outColData = $this.outColData;
-        databox.outRowData = $this.outRowData;
-        $this.$store.dispatch("printdata/handleClick", databox);
-        $this.heavyData(
-          $this.outColData[0],
-          $this.outColData[9],
-          $this.outColData[10]
-        );
-        $this.handleQueryBtn();
-      };
-      reader.readAsBinaryString(e);
+      var time1='2020-04-15';
+      var time2='2020-04-20';      
+      $this.$api.get('/Enapi/index?time1='+time1+'&time2='+time2,null,function(res){
+         if(res){
+            $this.outData=res;
+            var brandlist = [];
+            $this.outData.data.forEach(function(item, index){
+                brandlist.push(item.brand);
+            });
+            $this.InitSearch.brands = brandlist;
+
+            var rowList=[];
+            var continentData=[];
+            var countrieData=[]; 
+            var areaData=[]; 
+            var continentData=[];
+            for(var i=0;i<3;i++){
+                $this.outData.data[i].list.forEach(function(item, index){
+                    item.brands=$this.outData.data[i].brand;
+                    rowList.push(item);
+                });          
+            }            
+            $this.outRowData=rowList;
+            $this.outRowData.forEach(function(item,index){
+                 areaData.push(item.area)
+                 continentData.push(item.continent)
+            });
+            $this.heavyData(continentData,areaData);
+            $this.handleQueryBtn();
+         }
+      });
     },
     //品牌  国家  大洲去重
-    heavyData: function(brandData, continentData, countrieData) {
-      var brandlist = [];
+    heavyData: function(continentData, countrieData) {
       var continentslist = [];
       var countrieslist = [];
-      brandData.forEach(function(item, index) {
-        if ($.inArray(item, brandlist) == -1) {
-          brandlist.push(item);
-        }
-      });
       continentData.forEach(function(item, index) {
         if ($.inArray(item, continentslist) == -1) {
           continentslist.push(item);
@@ -303,22 +187,21 @@ export default {
           countrieslist.push(item);
         }
       });
-      this.InitSearch.brands = brandlist;
       this.InitSearch.continents = continentslist;
       this.InitSearch.countries = countrieslist;
     },
     // 获取过滤筛选条件后的数据
     filterResult: function(initData, searchParam) {
-      var filterBrandData = this.filterData(initData, searchParam.brands, 0);
+      var filterBrandData = this.filterDatabrand(searchParam.brands); 
       var filterContinentData = this.filterData(
         filterBrandData,
         searchParam.continents,
-        9
+        'con'
       );
       var filterCountryData = this.filterData(
         filterContinentData,
         searchParam.countries,
-        10
+        'area'
       );
       var filterData = this.filterDate(
         filterCountryData,
@@ -327,14 +210,46 @@ export default {
       );
       return filterData;
     },
-    // 过滤国家、大洲、品牌
+    // 过滤品牌
+    filterDatabrand: function(itemParam) {
+      var newData = [];
+      var newDatalist = [];
+      if (itemParam.length > 0) {
+        this.outData.data.forEach(function(item) {
+          itemParam.forEach(function(items) {
+            if (item.brand == items) {
+              newDatalist.push(item);
+            }
+          });
+        });
+        for(var i=0;i<newDatalist.length;i++){
+            newDatalist[i].list.forEach(function(item, index){
+                newData.push(item);
+            });          
+        }
+      } else {
+        for(var i=0;i<this.outData.data.length;i++){
+            this.outData.data[i].list.forEach(function(item, index){
+                newData.push(item);
+            });          
+        }
+      }
+      return newData;
+    },
+    // 过滤国家、大洲
     filterData: function(initData, itemParam, index) {
       var newData = [];
       if (itemParam.length > 0) {
         initData.forEach(function(item) {
           itemParam.forEach(function(items) {
-            if (item[index] == items) {
-              newData.push(item);
+            if(index=='area'){
+              if (item.area == items) {
+                newData.push(item);
+              }
+            }else{
+              if (item.continent == items) {
+                newData.push(item);
+              }
             }
           });
         });
@@ -386,7 +301,6 @@ export default {
       var $this = this;
       $this.brands = val;
       var brandNum = $this.brands.length;
-      console.log(val);
       if ($this.countries.length >= 1 && $this.continents.length < 1) {
         if ($this.countries.length > 1) {
           if ($this.brands.length < 1) {
@@ -518,12 +432,11 @@ export default {
       } else {
         $this.searchParam.data1 = "";
         $this.searchParam.data2 = "";
-      }
+      }    
       var filebox = {};
       filebox.searchData = $this.searchParam;
       filebox.rowData = $this.filterResult($this.outRowData, $this.searchParam);
       $this.filebox = filebox;
-      console.log($this.filebox, "提交筛选数据");
     }
   }
 };
@@ -540,40 +453,6 @@ export default {
   padding: 30px 30px 0px 30px;
   .data-btn {
     overflow: hidden;
-    .upload-demo {
-      float: left;
-      .el-upload {
-        float: left;
-        .el-button--primary {
-          height: 40px;
-          background-color: #5ea6fb;
-          background-image: linear-gradient(to bottom right, #3ee2db, #5ea6fb);
-          border-radius: 5px;
-          font-size: 15px;
-          color: #fff;
-          line-height: 40px;
-          padding: 0 15px 0 5px;
-          margin-right: 15px;
-          &:before {
-            background: url(../../assets/images/icon-tb03.png) center no-repeat;
-            content: "";
-            width: 35px;
-            height: 40px;
-            display: inline-block;
-            vertical-align: top;
-          }
-        }
-      }
-      .el-upload__tip {
-        float: left;
-        font-size: 16px;
-        line-height: 40px;
-        margin-top: 0px;
-      }
-      .el-upload-list {
-        display: none;
-      }
-    }
     .searchbox {
       float: right;
       // display: none;

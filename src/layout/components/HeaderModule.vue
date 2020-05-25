@@ -18,7 +18,6 @@ export default {
     name:"HeaderModule",
 }
 </script>
-
 <style lang="scss">
   .adminmaintop{
     overflow:hidden;

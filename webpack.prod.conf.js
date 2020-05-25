@@ -24,7 +24,7 @@ module.exports = {
         path:path.resolve(__dirname,"dist"),
         filename: 'js/[name].[chunkhash].js',
         chunkFilename: 'js/[name].[chunkhash].js',
-        publicPath:"/"
+        publicPath:"/nyb/"
     },
     // webpack4.x 环境配置项
     mode:"production",
