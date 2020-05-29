@@ -14,51 +14,91 @@ export default {
   props: ["filebox"],
   data() {
     return {
-      h2Font:"各品牌各时段询盘分析",
+      h2Font: "各品牌各时段询盘分析",
       name: [],
       areaData: [],
       newlist: [],
       arrlist: []
     };
   },
-  beforeMount(){
+  beforeMount() {
     var $this = this;
-    if ($this.filebox.rowData != ""||$this.filebox.rowData.length>=0) {
+    if ($this.filebox.rowData != "" || $this.filebox.rowData.length > 0) {
       $this.initAeraChartData($this.filebox);
     }
   },
   watch: {
     filebox: function(val) {
-      if (val.rowData != ""||val.rowData.length>=0) {
+      if (val.rowData != "" || val.rowData.length > 0) {
         this.initAeraChartData(val);
       }
     }
   },
-  methods: { 
-    editFont:function(data){
+  methods: {
+    editFont: function(data) {
       var sametext = "各时段询盘分析";
-      if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length == 0){
-        this.h2Font=data.brands + sametext;
-      }else if(data.brands.length == 1 && data.countries.length == 1 && data.continents.length == 0){
-        this.h2Font=data.brands + data.countries + sametext;
-      }else if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length == 1){
-        this.h2Font=data.brands + data.continents + sametext;
-      }else if(data.brands.length == 1 && data.countries.length > 1 && data.continents.length == 0){
-        this.h2Font=data.brands + "各个国家" + sametext;
-      }else if(data.brands.length == 1 && data.countries.length == 0 && data.continents.length > 1){
-        this.h2Font=data.brands + "各个大洲" + sametext;
-      }else if(data.brands.length > 1 && data.countries.length == 0 && data.continents.length == 0){
-        this.h2Font=this.h2Font;
-      }else if(data.brands.length > 1 && data.countries.length == 1 && data.continents.length == 0){
-        this.h2Font="各个品牌" + data.countries + sametext;
-      }else if(data.brands.length > 1 && data.countries.length == 0 && data.continents.length == 1){
-        this.h2Font="各个品牌" + data.continents + sametext;
-      }else if(data.brands.length == 0 && data.countries.length == 1 && data.continents.length == 0){
-        this.h2Font=data.countries + sametext;
-      }else if(data.brands.length == 0 && data.countries.length == 0 && data.continents.length == 1){
-        this.h2Font=data.continents + sametext;
-      }else{
-        this.h2Font=this.h2Font;
+      if (
+        data.brands.length == 1 &&
+        data.countries.length == 0 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = data.brands + sametext;
+      } else if (
+        data.brands.length == 1 &&
+        data.countries.length == 1 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = data.brands + data.countries + sametext;
+      } else if (
+        data.brands.length == 1 &&
+        data.countries.length == 0 &&
+        data.continents.length == 1
+      ) {
+        this.h2Font = data.brands + data.continents + sametext;
+      } else if (
+        data.brands.length == 1 &&
+        data.countries.length > 1 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = data.brands + "各个国家" + sametext;
+      } else if (
+        data.brands.length == 1 &&
+        data.countries.length == 0 &&
+        data.continents.length > 1
+      ) {
+        this.h2Font = data.brands + "各个大洲" + sametext;
+      } else if (
+        data.brands.length > 1 &&
+        data.countries.length == 0 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = this.h2Font;
+      } else if (
+        data.brands.length > 1 &&
+        data.countries.length == 1 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = "各个品牌" + data.countries + sametext;
+      } else if (
+        data.brands.length > 1 &&
+        data.countries.length == 0 &&
+        data.continents.length == 1
+      ) {
+        this.h2Font = "各个品牌" + data.continents + sametext;
+      } else if (
+        data.brands.length == 0 &&
+        data.countries.length == 1 &&
+        data.continents.length == 0
+      ) {
+        this.h2Font = data.countries + sametext;
+      } else if (
+        data.brands.length == 0 &&
+        data.countries.length == 0 &&
+        data.continents.length == 1
+      ) {
+        this.h2Font = data.continents + sametext;
+      } else {
+        this.h2Font = this.h2Font;
       }
     },
     // 初始化图表数据
@@ -81,30 +121,76 @@ export default {
             newJson.name = item.area;
           }
         }
-        var Datatime=item.datetime.split(' ')[1].split(':')[0];
-        if(Datatime=="00"){newJson.time='0-1';}
-        if(Datatime=="01"){newJson.time='1-2';}
-        if(Datatime=="02"){newJson.time='2-3';}
-        if(Datatime=="03"){newJson.time='3-4';}
-        if(Datatime=="04"){newJson.time='4-5';}
-        if(Datatime=="05"){newJson.time='5-6';}
-        if(Datatime=="06"){newJson.time='6-7';}
-        if(Datatime=="07"){newJson.time='7-8';}
-        if(Datatime=="08"){newJson.time='8-9';}
-        if(Datatime=="09"){newJson.time='9-10';}
-        if(Datatime=="10"){newJson.time='10-11';}
-        if(Datatime=="11"){newJson.time='11-12';}
-        if(Datatime=="12"){newJson.time='12-13';}
-        if(Datatime=="13"){newJson.time='13-14';}
-        if(Datatime=="14"){newJson.time='14-15';}
-        if(Datatime=="15"){newJson.time='15-16';}
-        if(Datatime=="16"){newJson.time='16-17';}
-        if(Datatime=="17"){newJson.time='17-18';}
-        if(Datatime=="18"){newJson.time='18-19';}
-        if(Datatime=="19"){newJson.time='19-20';}
-        if(Datatime=="21"){newJson.time='21-22';}
-        if(Datatime=="22"){newJson.time='22-23';}
-        if(Datatime=="23"){newJson.time='23-24';}
+        var Datatime = item.datetime.split(" ")[1].split(":")[0];
+        if (Datatime == "00") {
+          newJson.time = "0-1";
+        }
+        if (Datatime == "01") {
+          newJson.time = "1-2";
+        }
+        if (Datatime == "02") {
+          newJson.time = "2-3";
+        }
+        if (Datatime == "03") {
+          newJson.time = "3-4";
+        }
+        if (Datatime == "04") {
+          newJson.time = "4-5";
+        }
+        if (Datatime == "05") {
+          newJson.time = "5-6";
+        }
+        if (Datatime == "06") {
+          newJson.time = "6-7";
+        }
+        if (Datatime == "07") {
+          newJson.time = "7-8";
+        }
+        if (Datatime == "08") {
+          newJson.time = "8-9";
+        }
+        if (Datatime == "09") {
+          newJson.time = "9-10";
+        }
+        if (Datatime == "10") {
+          newJson.time = "10-11";
+        }
+        if (Datatime == "11") {
+          newJson.time = "11-12";
+        }
+        if (Datatime == "12") {
+          newJson.time = "12-13";
+        }
+        if (Datatime == "13") {
+          newJson.time = "13-14";
+        }
+        if (Datatime == "14") {
+          newJson.time = "14-15";
+        }
+        if (Datatime == "15") {
+          newJson.time = "15-16";
+        }
+        if (Datatime == "16") {
+          newJson.time = "16-17";
+        }
+        if (Datatime == "17") {
+          newJson.time = "17-18";
+        }
+        if (Datatime == "18") {
+          newJson.time = "18-19";
+        }
+        if (Datatime == "19") {
+          newJson.time = "19-20";
+        }
+        if (Datatime == "21") {
+          newJson.time = "21-22";
+        }
+        if (Datatime == "22") {
+          newJson.time = "22-23";
+        }
+        if (Datatime == "23") {
+          newJson.time = "23-24";
+        }
         newJson.number = 1;
         return newJson;
       });
@@ -279,14 +365,14 @@ export default {
     }
   }
 }
-.chart-page{
+.chart-page {
   width: 100%;
   overflow: hidden;
   background: #ffffff;
   border: 1px solid #eee;
   border-radius: 6px;
   margin-top: 30px;
-  h2{
+  h2 {
     width: 100%;
     height: 48px;
     line-height: 48px;

@@ -22,10 +22,21 @@ export default {
     PieChart,
     antVanter
   },
-  mounted() {
-    // console.log(this.filebox);
-    this.innerPieChart(this.filebox);
-    this.linearChart(this.filebox);
+  beforeMount() {
+    var $this = this;
+    if ($this.filebox.rowData != "" || $this.filebox.rowData.length > 0) {
+      console.log($this.filebox.rowData);
+      this.innerPieChart($this.filebox);
+      this.linearChart($this.filebox);
+    }
+  },
+  watch: {
+    filebox: function(val) {
+      if (val.rowData != "" || val.rowData.length > 0) {
+        this.innerPieChart(val);
+        this.linearChart(val);
+      }
+    }
   },
   methods: {
     innerPieChart(dataBox) {
