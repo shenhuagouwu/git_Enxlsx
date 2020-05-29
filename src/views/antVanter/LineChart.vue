@@ -35,8 +35,8 @@ export default {
   mounted() {
     this.initComponent();
   },
-  watch:{
-    arrlist:function(val){
+  watch: {
+    arrlist: function(val) {
       this.chart.changeData(val);
     }
   },
@@ -56,11 +56,16 @@ export default {
         min: 0,
         tickInterval: 1
       });
+      chart.tooltip({
+        showMarkers: true, // 展示 tooltip markers
+        shared: true,
+        showCrosshairs: true
+      });
       chart
         .line()
         .position("time*number")
         .color("name")
-        .shape("smooth")
+        .shape("smooth");
       this.chart = chart;
       this.chart.render();
     }

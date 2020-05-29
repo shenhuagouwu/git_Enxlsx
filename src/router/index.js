@@ -26,14 +26,14 @@ const routes = [
                         path: '/index/time',
                         component: () => import('@/views/timeInterval/index'),
                         name: 'timeIntervalPage',
-                    },{
+                    }, {
                         path: '/index/product',
                         component: () => import('@/views/product/index'),
                         name: 'productPage',
                     }, {
-                        path: '/index/video',
-                        component: () => import('@/views/video/index'),
-                        name: 'videoPage',
+                        path: '/index/sourcemode',
+                        component: () => import('@/views/SourceMode/index'),
+                        name: 'SourceMode',
                     }, {
                         path: '/index/wenda',
                         component: () => import('@/views/wenda/index'),
