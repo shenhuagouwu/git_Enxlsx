@@ -21,6 +21,12 @@ export default {
       arrlist: []
     };
   },
+  beforeMount(){
+    var $this = this;
+    if ($this.filebox.rowData != ""||$this.filebox.rowData.length>=0) {
+      $this.initAeraChartData($this.filebox);
+    }
+  },
   watch: {
     filebox: function(val) {
       if (val.rowData != ""||val.rowData.length>=0) {
@@ -57,7 +63,6 @@ export default {
     },
     // 初始化图表数据
     initAeraChartData: function(Data) {
-      console.log(Data,'data')
       //oldjson是把二维数组剔除不需要的数据，并把里面的数组转成对象
       let OldJson = Data.rowData.map((item, index) => {
         var newJson = {};
@@ -121,7 +126,6 @@ export default {
       });
       this.editFont(Data.searchData);
       this.arrlist = this.sortlist(arrlist, this.screenlist(arrlist));
-      console.log(this.arrlist,"图表最终使用数据");
     },
     // 排序列表并补齐缺失数据
     sortlist: function(element, list) {

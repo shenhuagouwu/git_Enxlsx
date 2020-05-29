@@ -9,12 +9,16 @@ Vue.use(Router);
 const routes = [
     {
         path: '/',
-        redirect: '/index/time',
+        redirect: '/index',
         component: Layout,
         children: [
             {
                 path: '/index',
-                redirect: '/index/time',
+                component: () => import('@/views/default/index'),
+                name: 'defaultPage'
+            },
+            {
+                path: '/index/time',
                 component: () => import('@/views/index/index'),
                 name: 'indexPage',
                 children: [
@@ -22,11 +26,7 @@ const routes = [
                         path: '/index/time',
                         component: () => import('@/views/timeInterval/index'),
                         name: 'timeIntervalPage',
-                    }, {
-                        path: '/index/new',
-                        component: () => import('@/views/news/index'),
-                        name: 'newPage',
-                    }, {
+                    },{
                         path: '/index/product',
                         component: () => import('@/views/product/index'),
                         name: 'productPage',

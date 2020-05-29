@@ -61,7 +61,7 @@ export default {
             name:'日期分析',
             isOn:false,
             ismain:false,
-            url:"/index/new",
+            url:"/index/product",
             pid:1,
             children:{
               childtnum:4,
