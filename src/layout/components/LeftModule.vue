@@ -149,7 +149,22 @@ export default {
             childcountry: "拖拽国家",
             childcontinent: "大洲时段"
           }
-        }
+        },
+        {
+            id:11,
+            type:'groupcomparison',
+            name:'组员对比分析',
+            isOn:false,
+            ismain:false,
+            url:"/index/team",
+            pid:1,
+            children:{
+              childtnum:10,
+              childtime:'拖拽时段',
+              childcountry:'拖拽国家',
+              childcontinent:'大洲时段'
+            }
+          }
       ],
       childList: []
     };

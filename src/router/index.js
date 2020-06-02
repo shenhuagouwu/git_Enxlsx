@@ -38,7 +38,11 @@ const routes = [
                         path: '/index/wenda',
                         component: () => import('@/views/wenda/index'),
                         name: 'wendaPage',
-                    },
+                    },{
+                        path: '/index/team',
+                        component: () => import('@/views/team/index'),
+                        name: 'teamPage',
+                    }
                 ]
             },
         ]
