@@ -25,7 +25,6 @@ export default {
   beforeMount() {
     var $this = this;
     if ($this.filebox.rowData != "" || $this.filebox.rowData.length > 0) {
-      console.log($this.filebox.rowData);
       this.innerPieChart($this.filebox);
       this.linearChart($this.filebox);
     }
@@ -84,7 +83,7 @@ export default {
       if (isNaN(f_x)) {
         return false;
       }
-      f_x = Math.round(f_x * 100) / 100;
+      f_x = Math.round(f_x * 10000) / 10000;
       return f_x;
     }, //changTwoDecimal结束
     linearChart(dataBox) {
@@ -106,7 +105,6 @@ export default {
         hash[key] ? "" : (hash[key] = true && item.push(next));
         return item;
       }, []);
-      console.log(haslist);
       //把新的数组与之前的数组进行对比如果相同就让number++最后得出设备和数量时间段
       datalist.map(function(item, index) {
         haslist.map(function(item1, index1) {
@@ -115,7 +113,8 @@ export default {
           }
         });
       });
-      console.log(haslist); //得出设备和数量时间段
+      // console.log(haslist); //得出设备和数量时间段
+
       //比较两个时间大小来进行排序
       let soltTime = function(str) {
         return new Date(str.replace(/-/g, "/")).getTime(); //用/替换日期中的-是为了解决Safari的兼容
@@ -138,8 +137,95 @@ export default {
         stillist.push(arrTimes);
       });
       console.log(stillist);
-      this.arrlist = stillist;
+      //   this.arrlist = stillist;
+      // console.log(this.arrlist);
+      var lenghtindex = this.dayTiem(
+        stillist[0].time,
+        stillist[stillist.length - 1].time
+      ); //得出最大和最小时间相差的天数
+      var newTime = [];
+      newTime.push(stillist[0].time);
+
+      for (var i = 0; i < lenghtindex; i++) {
+        newTime.push(this.getNewDay(newTime[i], 1));
+      }
+      console.log(newTime); //得出的數組時間天數
+      console.log(this.screenlist(stillist));
+      console.log(stillist);
+
+      this.arrlist = this.sortlist(
+        stillist,
+        this.screenlist(stillist),
+        newTime
+      );
       console.log(this.arrlist);
+    },
+    //两个时间相减得出的天数
+    dayTiem: function(date1, date2) {
+      //date1:小日期   date2:大日期
+      var sdate = new Date(date1);
+      var now = new Date(date2);
+      var days = now.getTime() - sdate.getTime();
+      var day = parseInt(days / (1000 * 60 * 60 * 24));
+      return day;
+    }, //dayTiem完结
+    //日期加上天数得到新的日期
+    //dateTemp 需要参加计算的日期，days要添加的天数，返回新的日期，日期格式：YYYY-MM-DD
+    getNewDay(dateTemp, days) {
+      var dateTemp = dateTemp.split("-");
+      var nDate = new Date(dateTemp[1] + "-" + dateTemp[2] + "-" + dateTemp[0]); //转换为MM-DD-YYYY格式
+      var millSeconds = Math.abs(nDate) + days * 24 * 60 * 60 * 1000;
+      var rDate = new Date(millSeconds);
+      var year = rDate.getFullYear();
+      var month = rDate.getMonth() + 1;
+      if (month < 10) month = "0" + month;
+      var date = rDate.getDate();
+      if (date < 10) date = "0" + date;
+      return year + "-" + month + "-" + date;
+    },
+    // 排序列表并补齐缺失数据
+    sortlist: function(element, list, timeList) {
+      var typeList = timeList;
+      var brandList = list; //大洲
+      var brandData = [];
+      brandList.forEach(function(item) {
+        var itemArray = [];
+        element.forEach(function(items) {
+          if (item == items.name) {
+            itemArray.push(items);
+          }
+        });
+        brandData.push(itemArray);
+      });
+      var sortList = [];
+      brandData.forEach(function(items) {
+        typeList.forEach(function(item) {
+          var itemData = {};
+          itemData.time = item;
+          var itemTime = items.find(function(e) {
+            return e.time == item;
+          });
+          if (itemTime) {
+            itemData.number = itemTime.number;
+            itemData.name = itemTime.name;
+          } else {
+            itemData.number = 0;
+            itemData.name = items[0].name;
+          }
+          sortList.push(itemData);
+        });
+      });
+      return sortList;
+    }, //排序列表并补齐缺失数据結束
+    // 获取图表中的线条所属名称列表
+    screenlist: function(element) {
+      var result = [];
+      for (let index = 0; index < element.length; index++) {
+        if (result.indexOf(element[index].name) == -1) {
+          result.push(element[index].name);
+        }
+      }
+      return result;
     }
   }
 };

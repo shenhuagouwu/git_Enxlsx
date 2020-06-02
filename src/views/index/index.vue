@@ -137,40 +137,44 @@ export default {
   mounted() {
     this.getDetailInfo();
   },
-  methods: {    
-    getDetailInfo:function(){
+  methods: {
+    getDetailInfo: function() {
       var $this = this;
-      var time1='2020-04-15';
-      var time2='2020-04-20';      
-      $this.$api.get('/Enapi/index?time1='+time1+'&time2='+time2,null,function(res){
-         if(res){
-            $this.outData=res;
+      var time1 = "2020-04-15";
+      var time2 = "2020-04-20";
+      $this.$api.get(
+        "/Enapi/index?time1=" + time1 + "&time2=" + time2,
+        null,
+        function(res) {
+          if (res) {
+            $this.outData = res;
             var brandlist = [];
-            $this.outData.data.forEach(function(item, index){
-                brandlist.push(item.brand);
+            $this.outData.data.forEach(function(item, index) {
+              brandlist.push(item.brand);
             });
             $this.InitSearch.brands = brandlist;
 
-            var rowList=[];
-            var continentData=[];
-            var countrieData=[]; 
-            var areaData=[]; 
-            var continentData=[];
-            for(var i=0;i<3;i++){
-                $this.outData.data[i].list.forEach(function(item, index){
-                    item.brands=$this.outData.data[i].brand;
-                    rowList.push(item);
-                });          
-            }            
-            $this.outRowData=rowList;
-            $this.outRowData.forEach(function(item,index){
-                 areaData.push(item.area)
-                 continentData.push(item.continent)
+            var rowList = [];
+            var continentData = [];
+            var countrieData = [];
+            var areaData = [];
+            var continentData = [];
+            for (var i = 0; i < 3; i++) {
+              $this.outData.data[i].list.forEach(function(item, index) {
+                item.brands = $this.outData.data[i].brand;
+                rowList.push(item);
+              });
+            }
+            $this.outRowData = rowList;
+            $this.outRowData.forEach(function(item, index) {
+              areaData.push(item.area);
+              continentData.push(item.continent);
             });
-            $this.heavyData(continentData,areaData);
+            $this.heavyData(continentData, areaData);
             $this.handleQueryBtn();
-         }
-      });
+          }
+        }
+      );
     },
     //品牌  国家  大洲去重
     heavyData: function(continentData, countrieData) {
@@ -191,16 +195,16 @@ export default {
     },
     // 获取过滤筛选条件后的数据
     filterResult: function(initData, searchParam) {
-      var filterBrandData = this.filterDatabrand(searchParam.brands); 
+      var filterBrandData = this.filterDatabrand(searchParam.brands);
       var filterContinentData = this.filterData(
         filterBrandData,
         searchParam.continents,
-        'con'
+        "con"
       );
       var filterCountryData = this.filterData(
         filterContinentData,
         searchParam.countries,
-        'area'
+        "area"
       );
       var filterData = this.filterDate(
         filterCountryData,
@@ -221,16 +225,16 @@ export default {
             }
           });
         });
-        for(var i=0;i<newDatalist.length;i++){
-            newDatalist[i].list.forEach(function(item, index){
-                newData.push(item);
-            });          
+        for (var i = 0; i < newDatalist.length; i++) {
+          newDatalist[i].list.forEach(function(item, index) {
+            newData.push(item);
+          });
         }
       } else {
-        for(var i=0;i<this.outData.data.length;i++){
-            this.outData.data[i].list.forEach(function(item, index){
-                newData.push(item);
-            });          
+        for (var i = 0; i < this.outData.data.length; i++) {
+          this.outData.data[i].list.forEach(function(item, index) {
+            newData.push(item);
+          });
         }
       }
       return newData;
@@ -241,11 +245,11 @@ export default {
       if (itemParam.length > 0) {
         initData.forEach(function(item) {
           itemParam.forEach(function(items) {
-            if(index=='area'){
+            if (index == "area") {
               if (item.area == items) {
                 newData.push(item);
               }
-            }else{
+            } else {
               if (item.continent == items) {
                 newData.push(item);
               }
@@ -431,7 +435,7 @@ export default {
       } else {
         $this.searchParam.data1 = "";
         $this.searchParam.data2 = "";
-      }    
+      }
       var filebox = {};
       filebox.searchData = $this.searchParam;
       filebox.rowData = $this.filterResult($this.outRowData, $this.searchParam);
