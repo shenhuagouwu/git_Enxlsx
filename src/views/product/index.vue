@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    产品分析1111
+    产品分析
   </div>
 </template>
 
