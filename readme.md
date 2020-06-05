@@ -24,3 +24,8 @@ yarn test
 ```
 yarn build
 ```
+5. 删除大文件夹命令
+
+```
+rimraf node_modules
+```

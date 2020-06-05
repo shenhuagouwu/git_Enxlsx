@@ -66,7 +66,7 @@ export default {
           name: "日期分析",
           isOn: false,
           ismain: false,
-          url: "/index/product",
+          url: "/index/dateTime",
           pid: 1,
           children: {
             childtnum: 4,
@@ -111,7 +111,7 @@ export default {
           name: "渠道分析",
           isOn: false,
           ismain: false,
-          url: "/index/wenda",
+          url: "/index/Channel",
           pid: 1,
           children: {
             childtnum: 7,
@@ -126,7 +126,7 @@ export default {
           name: "来源分析",
           isOn: false,
           ismain: false,
-          url: "/index",
+          url: "/index/Source",
           pid: 1,
           children: {
             childtnum: 8,
@@ -141,7 +141,7 @@ export default {
           name: "首次等级分析",
           isOn: false,
           ismain: false,
-          url: "/index",
+          url: "/index/Firstlevel",
           pid: 1,
           children: {
             childtnum: 9,

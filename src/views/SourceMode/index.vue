@@ -40,7 +40,7 @@ export default {
   methods: {
     innerPieChart(dataBox) {
       var quantity = dataBox.rowData.length;
-      console.log(dataBox.rowData);
+      //console.log(dataBox.rowData);
       var dataobj = dataBox.rowData; //原始对象
       var arrlist = [];
       dataobj.forEach(function(item, index) {
@@ -50,7 +50,7 @@ export default {
         maparr.proportion = 0;
         arrlist.push(maparr);
       });
-      console.log(arrlist);
+      //console.log(arrlist);
       //   得出设备和数量;
       var objItem = {},
         newAry = [];
@@ -69,13 +69,13 @@ export default {
           }
         });
       });
-      console.log(newAry); //去重后的数据
+      //console.log(newAry); //去重后的数据
       var _this = this;
       newAry.map(function(item) {
         item.proportion = _this.changTwoDecimal(item.number / quantity);
       });
       this.newlist = newAry;
-      console.log(this.newlist);
+      //console.log(this.newlist);
     }, //innerPieChart结束
     changTwoDecimal: function(item) {
       //把小数去除到小数点后面2位数
@@ -125,7 +125,7 @@ export default {
       haslist.sort(function(a, b) {
         return b.timeNew < a.timeNew ? 1 : -1;
       });
-      console.log(haslist); //时间排序后的数组
+      //console.log(haslist); //时间排序后的数组
       var stillist = [];
       //去除多余的属性得出最终的想要的
       haslist.forEach(function(item) {
@@ -136,7 +136,7 @@ export default {
 
         stillist.push(arrTimes);
       });
-      console.log(stillist);
+      //console.log(stillist);
       //   this.arrlist = stillist;
       // console.log(this.arrlist);
       var lenghtindex = this.dayTiem(
@@ -149,16 +149,16 @@ export default {
       for (var i = 0; i < lenghtindex; i++) {
         newTime.push(this.getNewDay(newTime[i], 1));
       }
-      console.log(newTime); //得出的數組時間天數
-      console.log(this.screenlist(stillist));
-      console.log(stillist);
+      //console.log(newTime); //得出的數組時間天數
+      //console.log(this.screenlist(stillist));
+      //console.log(stillist);
 
       this.arrlist = this.sortlist(
         stillist,
         this.screenlist(stillist),
         newTime
       );
-      console.log(this.arrlist);
+      //console.log(this.arrlist);
     },
     //两个时间相减得出的天数
     dayTiem: function(date1, date2) {

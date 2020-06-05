@@ -1,10 +1,10 @@
 <template>
-  <div class="list">渠道分析</div>
+  <div class="list">日期分析</div>
 </template>
 
 <script>
 export default {
-  name: 'wendaPage'
+  name: 'dateTimePage'
 }
 </script>
 

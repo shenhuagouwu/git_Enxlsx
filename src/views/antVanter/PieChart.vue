@@ -74,7 +74,8 @@ export default {
 
       chart.interaction("element-active");
 
-      chart.render();
+      this.chart = chart;
+      this.chart.render();
       //
     }
   }

@@ -34,7 +34,7 @@ export default {
   beforeMount() {
     var $this = this;
     if ($this.filebox.rowData != "" || $this.filebox.rowData.length > 0) {
-      console.log($this.filebox);
+      //console.log($this.filebox);
       this.linearChart($this.filebox);
     }
   },
@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     linearChart(dataBox) {
+      console.log(dataBox);
       var dataobj = dataBox.rowData; //原始对象
       var datalist = [];
       dataobj.forEach(function(item, index) {
@@ -84,7 +85,7 @@ export default {
       haslist.sort(function(a, b) {
         return b.timeNew < a.timeNew ? 1 : -1;
       });
-      console.log(haslist); //时间排序后的数组
+      //console.log(haslist); //时间排序后的数组
       var stillist = [];
       //去除多余的属性得出最终的想要的
       haslist.forEach(function(item) {
@@ -99,7 +100,7 @@ export default {
           }
         }
       });
-      console.log(stillist);
+      //console.log(stillist);
       var lenghtindex = this.dayTiem(
         stillist[0].time,
         stillist[stillist.length - 1].time
@@ -110,8 +111,8 @@ export default {
       for (var i = 0; i < lenghtindex; i++) {
         newTime.push(this.getNewDay(newTime[i], 1));
       }
-      console.log(newTime); //得出的數組時間天數
-      console.log(this.screenlist(stillist));
+      //console.log(newTime); //得出的數組時間天數
+      //console.log(this.screenlist(stillist));
       this.arrlist = this.sortlist(
         stillist,
         this.screenlist(stillist),

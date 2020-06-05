@@ -56,7 +56,22 @@ export default {
       chart.source(this.newNum);
       chart.scale('number', { nice: true });
       chart.coordinate().transpose();
-      chart.interval().position('name*number');
+      chart.axis('name', {
+        title: null,
+        tickLine: null,
+        line: null,
+      });
+      chart
+        .interval()
+        .position('name*number')
+        .color('name', ['#face1d', '#37c461', '#2194ff'])
+        .size(50)
+        .label('number', {
+          style: {
+            fill: '#8d8d8d',
+          },
+          offset: 10,
+        });
       this.chart = chart;
       this.chart.render();
     }

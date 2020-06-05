@@ -26,7 +26,11 @@ const routes = [
                         path: '/index/time',
                         component: () => import('@/views/timeInterval/index'),
                         name: 'timeIntervalPage',
-                    }, {
+                    },{
+                        path: '/index/dateTime',
+                        component: () => import('@/views/dateTime/index'),
+                        name: 'dateTimePage',
+                    },{
                         path: '/index/product',
                         component: () => import('@/views/product/index'),
                         name: 'productPage',
@@ -34,10 +38,18 @@ const routes = [
                         path: '/index/sourcemode',
                         component: () => import('@/views/SourceMode/index'),
                         name: 'SourceMode',
-                    }, {
-                        path: '/index/wenda',
-                        component: () => import('@/views/wenda/index'),
-                        name: 'wendaPage',
+                    },{
+                        path: '/index/Channel',
+                        component: () => import('@/views/Channel/index'),
+                        name: 'ChannelPage',
+                    },{
+                        path: '/index/Source',
+                        component: () => import('@/views/Source/index'),
+                        name: 'SourcePage',
+                    },{
+                        path: '/index/Firstlevel',
+                        component: () => import('@/views/Firstlevel/index'),
+                        name: 'FirstlevelPage',
                     },{
                         path: '/index/team',
                         component: () => import('@/views/team/index'),
