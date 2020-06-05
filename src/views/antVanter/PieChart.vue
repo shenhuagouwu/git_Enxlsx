@@ -1,6 +1,5 @@
 <template>
   <div class="PieChart">
-    <h2>{{msg}}</h2>
     <div :id="id"></div>
   </div>
 </template>
@@ -16,7 +15,6 @@ export default {
   props: ["newlist"],
   data() {
     return {
-      msg: "来源设备占比分析",
       chart: null, //全局定义chart对象
       arrlist: this.newlist,
       id: Math.random()

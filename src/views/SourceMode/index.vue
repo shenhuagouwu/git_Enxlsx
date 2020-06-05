@@ -1,8 +1,13 @@
 <template>
   <div class="list">
-    <pie-chart :newlist="newlist" v-if="newlist.length>0"></pie-chart>
-    <h2>每日询盘统计</h2>
-    <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
+    <div class="chart-one">
+      <h2>来源设备来源占比图表</h2>
+      <pie-chart :newlist="newlist" v-if="newlist.length>0"></pie-chart>
+    </div>
+    <div class="chart-two">
+      <h2>每个设备美团询盘对比</h2>
+      <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
+    </div>
   </div>
 </template>
 
@@ -238,12 +243,33 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  font-size: 20px;
-  color: #333;
+.list h2 {
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  font-size: 24px;
   text-align: center;
-  line-height: 1.2;
-  margin-bottom: 20px;
-  margin-top: 50px;
+  margin: 20px 0;
+  color: #555;
+}
+
+.list .chart-one {
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-top: 30px;
+  padding: 30px;
+}
+.list .chart-two {
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-top: 30px;
+  padding: 30px;
+  box-sizing: border-box;
 }
 </style>
