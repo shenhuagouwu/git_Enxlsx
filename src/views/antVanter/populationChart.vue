@@ -47,13 +47,15 @@ export default {
   methods: {
     initComponent() {
       const elWidthValue = this.$el.clientWidth;
+      const elHeightValue = this.$el.clientHeight;
       // 此函数为个人习惯,喜欢创建一个初始化的函数
       const chart = new Chart({
         container: this.id,
         width: elWidthValue,
-        height: 500
+        height: elHeightValue
       });
-      chart.source(this.newNum);
+      chart.clear(); // 清理所有
+      chart.source(this.newNum);// 重新加载数据
       chart.scale('number', { nice: true });
       chart.coordinate().transpose();
       chart.axis('name', {
@@ -61,16 +63,17 @@ export default {
         tickLine: null,
         line: null,
       });
+      chart.interaction('active-region');
       chart
         .interval()
         .position('name*number')
-        .color('name', ['#face1d', '#37c461', '#2194ff'])
-        .size(50)
+        .color('name', ['#face1d', '#37c461', '#2194ff','#2efaa5', '#fa2e96', '#bf8b56'])
+        .size(30)
         .label('number', {
           style: {
             fill: '#8d8d8d',
           },
-          offset: 10,
+          offset:10,
         });
       this.chart = chart;
       this.chart.render();
@@ -78,8 +81,7 @@ export default {
   }
 };
 </script>
-
-<style>
+<style  scoped>
 #c1 {
   margin: 20px auto;
   width: 100%;

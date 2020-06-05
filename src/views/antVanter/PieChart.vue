@@ -29,7 +29,7 @@ export default {
     this.initComponent();
   },
   watch: {
-    arrlist: function(val) {
+    newlist: function(val) {
       this.chart.changeData(val);
     }
   },
@@ -50,7 +50,7 @@ export default {
 
       chart.scale("proportion", {
         formatter: val => {
-          val = val * 100 + "%";
+          val = val + "%";
           return val;
         }
       });
@@ -66,7 +66,7 @@ export default {
         .color("device")
         .label("percent", {
           content: data => {
-            return `${data.device}: ${data.proportion * 100}%`;
+            return `${data.device}: ${data.proportion}%`;
             // return (this.arrlist.device = this.arrlist.proportion * 100);
           }
         })

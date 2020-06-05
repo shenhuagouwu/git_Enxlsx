@@ -20,11 +20,11 @@
     </div>    
     <div class="popul-page">
       <h2>福特、红星、福特总的询盘对比</h2>
-        <population-Chart :newNum="newNum"></population-Chart>
+        <population-Chart :newNum="newNum" style="height:300px"></population-Chart>
     </div>
     <div class="chart-page">
         <h2>福特、红星、福特当天的询盘</h2>
-        <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
+        <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     return {
       outData: [],
       outRowData: [],
-      newNum: [],
+      newNum:[],
       timeDate:[],
       filebox: {
         rowData: "",
@@ -98,7 +98,10 @@ export default {
   beforeMount(){
     var $this = this;
     if ($this.newNum.length>0) {
-      $this.initAeraChartData($this.newNum);
+      $this.getpopulist($this.newNum);
+    }
+    if ($this.filebox.rowData != "" || $this.filebox.rowData.length > 0) {
+      $this.initAeraChartData($this.filebox);
     }
   },
   methods: {    
@@ -272,6 +275,7 @@ export default {
     getpopulist:function(val){
       var $this=this;
       var brands=[];
+      var oldnewNum=[];
       $this.outData.data.forEach(function(item){
           brands.push(item.brand);
       });
@@ -284,8 +288,26 @@ export default {
             brandNum.name=item;
           }
         });
-        $this.newNum.push(brandNum);
+        oldnewNum.push(brandNum);
       });
+      
+      oldnewNum.sort(function(a,b){
+        return a.number - b.number
+      })
+      // for(var i = 0; i<oldnewNum.length;i++){
+      //   for(var j = 1; j<oldnewNum.length+1;j++){
+      //     if(oldnewNum[i].number<oldnewNum[j].number){
+      //         oldnewNum[i] = oldnewNum.splice(j,1,oldnewNum[i])[0];
+      //     }
+      //   }
+        // oldnewNum.forEach(function(item){
+        //     if(oldnewNum[i].number>=item.number){
+        //       maxNum=item;
+        //     }
+        // });
+      //}
+      $this.newNum = oldnewNum;
+      //console.log($this.newNum,'$this.newNum');
     },
     // 初始化图表数据
     initAeraChartData: function(Data) {
@@ -362,8 +384,7 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
+<style lang="scss" scoped>
 .adminmainfr {
   clear: both;
   display: block;

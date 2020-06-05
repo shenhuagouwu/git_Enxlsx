@@ -78,11 +78,11 @@ export default {
       fileList: [],
       outData: [],
       outRowData: [],
-      timeDate:[],
+      timeDate: [],
       filebox: {
         rowData: "",
         searchData: {},
-        timeDate:[]
+        timeDate: []
       },
       disabledbrands: false,
       disabledcountrie: false,
@@ -142,13 +142,13 @@ export default {
   methods: {
     getDetailInfo: function() {
       var $this = this;
-      var time1,time2;
-      if($this.subtime==''){
-          time1='';
-          time2='';
-      }else{
-          time1=$this.subtime[0];
-          time2=$this.subtime[1];
+      var time1, time2;
+      if ($this.subtime == "") {
+        time1 = "";
+        time2 = "";
+      } else {
+        time1 = $this.subtime[0];
+        time2 = $this.subtime[1];
       }
       $this.$api.get(
         "/Enapi/index?time1=" + time1 + "&time2=" + time2,
@@ -203,71 +203,87 @@ export default {
     },
     // 计算续住的总日期列表
     gettimeDate(begin, end) {
-      var arr1= begin.split("-");
-      var arr2= end.split("-");
-      var arr1_= new Date();
+      var arr1 = begin.split("-");
+      var arr2 = end.split("-");
+      var arr1_ = new Date();
       var arrTime = [];
       arr1_.setUTCFullYear(arr1[0], arr1[1] - 1, arr1[2]);
-      var arr2_= new Date();
+      var arr2_ = new Date();
       arr2_.setUTCFullYear(arr2[0], arr2[1] - 1, arr2[2]);
       var unixDb = arr1_.getTime();
       var unixDe = arr2_.getTime();
-      for (var k = unixDb; k <= unixDe;) {
-        arrTime.push(this.datetimeparse(k, 'YY-MM-DD'));
+      for (var k = unixDb; k <= unixDe; ) {
+        arrTime.push(this.datetimeparse(k, "YY-MM-DD"));
         k = k + 24 * 60 * 60 * 1000;
       }
       return arrTime;
-    },    
+    },
     // 时间格式处理
-    datetimeparse (timestamp, format, prefix) {
-        if (typeof timestamp =='string'){
-            timestamp=Number(timestamp)
-        };
-        //转换时区
-        var currentZoneTime = new Date (timestamp);
-        var currentTimestamp = currentZoneTime.getTime ();
-        var offsetZone = currentZoneTime.getTimezoneOffset () / 60;//如果offsetZone>0是西区，西区晚
-        var offset = null;
-        //客户端时间与服务器时间保持一致，固定北京时间东八区。
-        offset = offsetZone + 8;
-        currentTimestamp = currentTimestamp + offset * 3600 * 1000
-  
-        var newtimestamp = null;
-        if (currentTimestamp) {
-            if (currentTimestamp.toString ().length === 13) {
-                newtimestamp = currentTimestamp.toString ()
-            } else if (currentTimestamp.toString ().length === 10) {
-                newtimestamp = currentTimestamp + '000'
-            } else {
-                newtimestamp = null
-            }
+    datetimeparse(timestamp, format, prefix) {
+      if (typeof timestamp == "string") {
+        timestamp = Number(timestamp);
+      }
+      //转换时区
+      var currentZoneTime = new Date(timestamp);
+      var currentTimestamp = currentZoneTime.getTime();
+      var offsetZone = currentZoneTime.getTimezoneOffset() / 60; //如果offsetZone>0是西区，西区晚
+      var offset = null;
+      //客户端时间与服务器时间保持一致，固定北京时间东八区。
+      offset = offsetZone + 8;
+      currentTimestamp = currentTimestamp + offset * 3600 * 1000;
+
+      var newtimestamp = null;
+      if (currentTimestamp) {
+        if (currentTimestamp.toString().length === 13) {
+          newtimestamp = currentTimestamp.toString();
+        } else if (currentTimestamp.toString().length === 10) {
+          newtimestamp = currentTimestamp + "000";
         } else {
-            newtimestamp = null
+          newtimestamp = null;
         }
-        ;
-        var dateobj = newtimestamp ? new Date (parseInt (newtimestamp)) : new Date ()
-        var YYYY = dateobj.getFullYear ()
-        var MM = dateobj.getMonth () > 8 ? dateobj.getMonth () + 1 : '0' + (dateobj.getMonth () + 1)
-        var DD = dateobj.getDate () > 9 ? dateobj.getDate () : '0' + dateobj.getDate ()
-        var HH = dateobj.getHours () > 9 ? dateobj.getHours () : '0' + dateobj.getHours ()
-        var mm = dateobj.getMinutes () > 9 ? dateobj.getMinutes () : '0' + dateobj.getMinutes ()
-        var ss = dateobj.getSeconds () > 9 ? dateobj.getSeconds () : '0' + dateobj.getSeconds ()
-        var output = '';
-        var separator = '/'
-        if (format) {
-            separator = format.match (/-/) ? '-' : '/'
-            output += format.match (/yy/i) ? YYYY : ''
-            output += format.match (/MM/) ? (output.length ? separator : '') + MM : ''
-            output += format.match (/dd/i) ? (output.length ? separator : '') + DD : ''
-            output += format.match (/hh/i) ? (output.length ? ' ' : '') + HH : ''
-            output += format.match (/mm/) ? (output.length ? ':' : '') + mm : ''
-            output += format.match (/ss/i) ? (output.length ? ':' : '') + ss : ''
-        } else {
-            output += YYYY + separator + MM + separator + DD
-        }
-        output = prefix ? (prefix + output) : output
-  
-        return newtimestamp ? output : ''
+      } else {
+        newtimestamp = null;
+      }
+      var dateobj = newtimestamp
+        ? new Date(parseInt(newtimestamp))
+        : new Date();
+      var YYYY = dateobj.getFullYear();
+      var MM =
+        dateobj.getMonth() > 8
+          ? dateobj.getMonth() + 1
+          : "0" + (dateobj.getMonth() + 1);
+      var DD =
+        dateobj.getDate() > 9 ? dateobj.getDate() : "0" + dateobj.getDate();
+      var HH =
+        dateobj.getHours() > 9 ? dateobj.getHours() : "0" + dateobj.getHours();
+      var mm =
+        dateobj.getMinutes() > 9
+          ? dateobj.getMinutes()
+          : "0" + dateobj.getMinutes();
+      var ss =
+        dateobj.getSeconds() > 9
+          ? dateobj.getSeconds()
+          : "0" + dateobj.getSeconds();
+      var output = "";
+      var separator = "/";
+      if (format) {
+        separator = format.match(/-/) ? "-" : "/";
+        output += format.match(/yy/i) ? YYYY : "";
+        output += format.match(/MM/)
+          ? (output.length ? separator : "") + MM
+          : "";
+        output += format.match(/dd/i)
+          ? (output.length ? separator : "") + DD
+          : "";
+        output += format.match(/hh/i) ? (output.length ? " " : "") + HH : "";
+        output += format.match(/mm/) ? (output.length ? ":" : "") + mm : "";
+        output += format.match(/ss/i) ? (output.length ? ":" : "") + ss : "";
+      } else {
+        output += YYYY + separator + MM + separator + DD;
+      }
+      output = prefix ? prefix + output : output;
+
+      return newtimestamp ? output : "";
     },
     // 获取过滤筛选条件后的数据
     filterResult: function(initData, searchParam) {
@@ -357,8 +373,8 @@ export default {
         // }
         initData.forEach(function(item) {
           if (
-            $this.compareDate(item[1], startDate) >= 0 &&
-            $this.compareDate(endDate, item[1]) >= 0
+            $this.compareDate(item.datetime.split(" ")[0], startDate) >= 0 &&
+            $this.compareDate(endDate, item.datetime.split(" ")[0]) >= 0
           ) {
             newData.push(item);
           }
@@ -506,35 +522,39 @@ export default {
       $this.searchParam.continents = $this.continents;
       $this.searchParam.countries = $this.countries;
       if ($this.subtime != "") {
-        $this.searchParam.data1 = moment($this.subtime[0]).format("YYYY-MM-DD");
-        $this.searchParam.data2 = moment($this.subtime[1]).format("YYYY-MM-DD");
-        $this.timeDate=$this.gettimeDate($this.searchParam.date1,$this.searchParam.date2);
+        $this.searchParam.date1 = moment($this.subtime[0]).format("YYYY-MM-DD");
+        $this.searchParam.date2 = moment($this.subtime[1]).format("YYYY-MM-DD");
+        $this.timeDate = $this.gettimeDate(
+          $this.searchParam.date1,
+          $this.searchParam.date2
+        );
       } else {
-        $this.searchParam.data1 = "";
-        $this.searchParam.data2 = "";
-        if($this.outRowData != ''){
-          var timeList=[];
-          $this.outRowData.forEach(function(item){
-              timeList.push(item.datetime.split(' ')[0]);
-          })
-          var max=timeList[0],min=timeList[0];
-          timeList.forEach(function(item,index){
-            if($this.compareDate(item,max)>=0){
-              max=item;
+        $this.searchParam.date1 = "";
+        $this.searchParam.date2 = "";
+        if ($this.outRowData != "") {
+          var timeList = [];
+          $this.outRowData.forEach(function(item) {
+            timeList.push(item.datetime.split(" ")[0]);
+          });
+          var max = timeList[0],
+            min = timeList[0];
+          timeList.forEach(function(item, index) {
+            if ($this.compareDate(item, max) >= 0) {
+              max = item;
             }
-            if($this.compareDate(item,min)<=0){
-              min=item;
+            if ($this.compareDate(item, min) <= 0) {
+              min = item;
             }
-          })
-          $this.timeDate=$this.gettimeDate(min,max);
+          });
+          $this.timeDate = $this.gettimeDate(min, max);
         }
       }
       var filebox = {};
-      filebox.timeDate=$this.timeDate
+      filebox.timeDate = $this.timeDate;
       filebox.searchData = $this.searchParam;
       filebox.rowData = $this.filterResult($this.outRowData, $this.searchParam);
       $this.filebox = filebox;
-      console.log(filebox,'filebox')
+      console.log(filebox, "filebox");
     }
   }
 };

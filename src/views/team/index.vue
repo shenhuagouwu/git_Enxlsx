@@ -3,13 +3,13 @@
     <div class="team team01">
       <h2>组员排名对比</h2>
       <div class="chart_same">
-        <population-Chart :newNum="newNum"></population-Chart>
+        <population-Chart :newNum="newNum" style="height:400px"></population-Chart>
       </div>
     </div>
     <div class="team team02">
       <h2>组员询盘变化趋势</h2>
       <div class="chart_same">
-        <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
+        <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
       </div>
     </div>
   </div>

@@ -44,12 +44,13 @@ export default {
   methods: {
     initComponent() {
       const elWidthValue = this.$el.clientWidth;
+      const elHeightValue = this.$el.clientHeight;
       // 此函数为个人习惯,喜欢创建一个初始化的函数
       const chart = new G2.Chart({
         container: this.id,
         width: elWidthValue,
         autoFit: false,
-        height: 500
+        height: elHeightValue
       });
       chart.source(this.newlist);
       chart.scale("number", {
@@ -73,7 +74,7 @@ export default {
 };
 </script>
 
-<style>
+<style  scoped>
 #c1 {
   margin: 20px auto;
   width: 100%;

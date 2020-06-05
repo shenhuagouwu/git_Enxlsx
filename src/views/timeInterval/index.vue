@@ -1,7 +1,7 @@
 <template>
   <div class="chart-page">
     <h2>{{h2Font}}</h2>
-    <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"></ant-vanter>
+    <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0"  style="height:500px"></ant-vanter>
   </div>
 </template>
 <script>
@@ -285,7 +285,7 @@ export default {
   }
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .module {
   width: 100%;
   min-height: 360px;
@@ -372,6 +372,7 @@ export default {
   border: 1px solid #eee;
   border-radius: 6px;
   margin-top: 30px;
+  padding:0px 20px 20px 20px;
   h2 {
     width: 100%;
     height: 48px;
