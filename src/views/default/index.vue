@@ -19,11 +19,11 @@
       </div>
     </div>    
     <div class="popul-page">
-      <h2>福特、红星、福特总的询盘对比</h2>
+      <h2>富特、红星、中德总的询盘对比</h2>
         <population-Chart :newNum="newNum" style="height:300px"></population-Chart>
     </div>
     <div class="chart-page">
-        <h2>福特、红星、福特当天的询盘</h2>
+        <h2>富特、红星、中德当天的询盘</h2>
         <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
     </div>
   </div>

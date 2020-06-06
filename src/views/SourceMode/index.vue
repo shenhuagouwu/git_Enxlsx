@@ -5,7 +5,7 @@
       <pie-chart :newlist="newlist" v-if="newlist.length>0"></pie-chart>
     </div>
     <div class="chart-two">
-      <h2>每个设备美团询盘对比</h2>
+      <h2>每个设备每日询盘对比</h2>
       <ant-vanter :arrlist="arrlist" v-if="arrlist.length>0" style="height:300px"></ant-vanter>
     </div>
   </div>
