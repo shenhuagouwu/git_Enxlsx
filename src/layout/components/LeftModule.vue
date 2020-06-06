@@ -90,81 +90,81 @@ export default {
               childcontinent:'大洲时段'
             }
           },
-        {
-          id: 5,
-          type: "Dateanalysis",
-          name: "日期分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/dateTime",
-          pid: 1,
-          children: {
-            childtnum: 4,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        },
-        {
-          id: 6,
-          type: "Productanalysis",
-          name: "产品分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/product",
-          pid: 1,
-          children: {
-            childtnum: 5,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        },
-        {
-          id: 8,
-          type: "Channelanalysis",
-          name: "渠道分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/Channel",
-          pid: 1,
-          children: {
-            childtnum: 7,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        },
-        {
-          id: 9,
-          type: "Sourceanalysis",
-          name: "来源分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/Source",
-          pid: 1,
-          children: {
-            childtnum: 8,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        },
-        {
-          id: 10,
-          type: "Firstlevelanalysis",
-          name: "首次等级分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/Firstlevel",
-          pid: 1,
-          children: {
-            childtnum: 9,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        }
+        // {
+        //   id: 5,
+        //   type: "Dateanalysis",
+        //   name: "日期分析",
+        //   isOn: false,
+        //   ismain: false,
+        //   url: "/index/dateTime",
+        //   pid: 1,
+        //   children: {
+        //     childtnum: 4,
+        //     childtime: "拖拽时段",
+        //     childcountry: "拖拽国家",
+        //     childcontinent: "大洲时段"
+        //   }
+        // },
+        // {
+        //   id: 6,
+        //   type: "Productanalysis",
+        //   name: "产品分析",
+        //   isOn: false,
+        //   ismain: false,
+        //   url: "/index/product",
+        //   pid: 1,
+        //   children: {
+        //     childtnum: 5,
+        //     childtime: "拖拽时段",
+        //     childcountry: "拖拽国家",
+        //     childcontinent: "大洲时段"
+        //   }
+        // },
+        // {
+        //   id: 8,
+        //   type: "Channelanalysis",
+        //   name: "渠道分析",
+        //   isOn: false,
+        //   ismain: false,
+        //   url: "/index/Channel",
+        //   pid: 1,
+        //   children: {
+        //     childtnum: 7,
+        //     childtime: "拖拽时段",
+        //     childcountry: "拖拽国家",
+        //     childcontinent: "大洲时段"
+        //   }
+        // },
+        // {
+        //   id: 9,
+        //   type: "Sourceanalysis",
+        //   name: "来源分析",
+        //   isOn: false,
+        //   ismain: false,
+        //   url: "/index/Source",
+        //   pid: 1,
+        //   children: {
+        //     childtnum: 8,
+        //     childtime: "拖拽时段",
+        //     childcountry: "拖拽国家",
+        //     childcontinent: "大洲时段"
+        //   }
+        // },
+        // {
+        //   id: 10,
+        //   type: "Firstlevelanalysis",
+        //   name: "首次等级分析",
+        //   isOn: false,
+        //   ismain: false,
+        //   url: "/index/Firstlevel",
+        //   pid: 1,
+        //   children: {
+        //     childtnum: 9,
+        //     childtime: "拖拽时段",
+        //     childcountry: "拖拽国家",
+        //     childcontinent: "大洲时段"
+        //   }
+        // }
       ],
       childList: []
     };

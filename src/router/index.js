@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-05-14 16:27:38
+ * @LastEditTime: 2020-06-06 11:24:37
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \git_Enxlsx\src\router\index.js
+ */ 
 import Vue from 'vue';
 import Router from 'vue-router';
 /* 1. 定义路由组件 */
@@ -27,29 +35,9 @@ const routes = [
                         component: () => import('@/views/timeInterval/index'),
                         name: 'timeIntervalPage',
                     },{
-                        path: '/index/dateTime',
-                        component: () => import('@/views/dateTime/index'),
-                        name: 'dateTimePage',
-                    },{
-                        path: '/index/product',
-                        component: () => import('@/views/product/index'),
-                        name: 'productPage',
-                    }, {
                         path: '/index/sourcemode',
                         component: () => import('@/views/SourceMode/index'),
                         name: 'SourceMode',
-                    },{
-                        path: '/index/Channel',
-                        component: () => import('@/views/Channel/index'),
-                        name: 'ChannelPage',
-                    },{
-                        path: '/index/Source',
-                        component: () => import('@/views/Source/index'),
-                        name: 'SourcePage',
-                    },{
-                        path: '/index/Firstlevel',
-                        component: () => import('@/views/Firstlevel/index'),
-                        name: 'FirstlevelPage',
                     },{
                         path: '/index/team',
                         component: () => import('@/views/team/index'),
@@ -60,6 +48,27 @@ const routes = [
         ]
     }
 ];
+// {
+//     path: '/index/dateTime',
+//     component: () => import('@/views/dateTime/index'),
+//     name: 'dateTimePage',
+// },{
+//     path: '/index/product',
+//     component: () => import('@/views/product/index'),
+//     name: 'productPage',
+// }, {
+//     path: '/index/Channel',
+//     component: () => import('@/views/Channel/index'),
+//     name: 'ChannelPage',
+// },{
+//     path: '/index/Source',
+//     component: () => import('@/views/Source/index'),
+//     name: 'SourcePage',
+// },{
+//     path: '/index/Firstlevel',
+//     component: () => import('@/views/Firstlevel/index'),
+//     name: 'FirstlevelPage',
+// }
 
 /* 3. 创建 router 实例 */
 const router = new Router({
