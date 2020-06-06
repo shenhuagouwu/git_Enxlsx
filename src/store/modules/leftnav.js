@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 const state = {
-    editorType: Cookies.get('editorType') ? Cookies.get('editorType') : 'Timeperiodanalysis'
+    editorType: Cookies.get('editorType') ? Cookies.get('editorType') : 'Googleinquiry'
 };
 const mutations = {
     changeType(state,editorType){

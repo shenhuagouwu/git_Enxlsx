@@ -40,7 +40,7 @@ export default {
           id: 1,
           type: "Googleinquiry",
           name: "谷歌询盘分析",
-          isOn: false,
+          isOn: true,
           ismain: true,
           url: "/index",
           pid: 0
@@ -49,7 +49,7 @@ export default {
           id: 2,
           type: "Timeperiodanalysis",
           name: "时段分析",
-          isOn: true,
+          isOn: false,
           ismain: false,
           url: "/index/time",
           pid: 1,
@@ -60,6 +60,36 @@ export default {
             childcontinent: "大洲时段"
           }
         },
+        {
+          id: 7,
+          type: "Sourcemodeanalysis",
+          name: "来源方式分析",
+          isOn: false,
+          ismain: false,
+          url: "/index/sourcemode",
+          pid: 1,
+          children: {
+            childtnum: 6,
+            childtime: "拖拽时段",
+            childcountry: "拖拽国家",
+            childcontinent: "大洲时段"
+          }
+        },
+        {
+            id:11,
+            type:'groupcomparison',
+            name:'组员对比分析',
+            isOn:false,
+            ismain:false,
+            url:"/index/team",
+            pid:1,
+            children:{
+              childtnum:10,
+              childtime:'拖拽时段',
+              childcountry:'拖拽国家',
+              childcontinent:'大洲时段'
+            }
+          },
         {
           id: 5,
           type: "Dateanalysis",
@@ -85,21 +115,6 @@ export default {
           pid: 1,
           children: {
             childtnum: 5,
-            childtime: "拖拽时段",
-            childcountry: "拖拽国家",
-            childcontinent: "大洲时段"
-          }
-        },
-        {
-          id: 7,
-          type: "Sourcemodeanalysis",
-          name: "来源方式分析",
-          isOn: false,
-          ismain: false,
-          url: "/index/sourcemode",
-          pid: 1,
-          children: {
-            childtnum: 6,
             childtime: "拖拽时段",
             childcountry: "拖拽国家",
             childcontinent: "大洲时段"
@@ -149,22 +164,7 @@ export default {
             childcountry: "拖拽国家",
             childcontinent: "大洲时段"
           }
-        },
-        {
-            id:11,
-            type:'groupcomparison',
-            name:'组员对比分析',
-            isOn:false,
-            ismain:false,
-            url:"/index/team",
-            pid:1,
-            children:{
-              childtnum:10,
-              childtime:'拖拽时段',
-              childcountry:'拖拽国家',
-              childcontinent:'大洲时段'
-            }
-          }
+        }
       ],
       childList: []
     };
@@ -173,9 +173,9 @@ export default {
     var $this = this;
     $this.$nextTick(function() {
       var types = $this.type;
-      if (types == "Googleinquiry") {
-        types = "Timeperiodanalysis";
-      }
+      // if (types == "Googleinquiry") {
+      //   types = "Timeperiodanalysis";
+      // }
       $this.leftNavList.forEach(function(item, index) {
         if (item.type == types) {
           item.isOn = true;
@@ -196,9 +196,9 @@ export default {
     changeType(value) {
       var $this = this;
       var typeValue = value;
-      if (typeValue == "Googleinquiry") {
-        typeValue = "Timeperiodanalysis";
-      }
+      // if (typeValue == "Googleinquiry") {
+      //   typeValue = "Timeperiodanalysis";
+      // }
       $this.leftNavList.forEach(function(item, index) {
         if (item.type == typeValue) {
           item.isOn = true;
